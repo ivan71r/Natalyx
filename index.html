@@ -615,7 +615,10 @@
     <script>
         (function() {
             const tg = window.Telegram?.WebApp;
-            if (tg) { 
+            
+            // Функція для безпечної ініціалізації Telegram WebApp
+            function initTelegram() {
+                if (!tg) return;
                 try {
                     tg.ready(); 
                     tg.expand(); 
@@ -625,6 +628,8 @@
                     console.log('Telegram WebApp init error:', e);
                 }
             }
+            
+            initTelegram();
 
             const YOUTUBE_URL = 'https://www.youtube.com/@DnevnikAktivov';
             const NEWS_URL = 'https://t.me/dnevnikaktivovnews';
@@ -632,6 +637,7 @@
 
             const loadingScreen = document.getElementById('loadingScreen');
             const mainContent = document.getElementById('mainContent');
+            const appContainer = document.getElementById('app');
             
             // Гарантовано прибираємо loading screen
             function hideLoadingScreen() {
@@ -649,8 +655,8 @@
                 });
             }
 
-            // Додатковий захист — прибираємо через 2 секунди в будь-якому випадку
-            setTimeout(hideLoadingScreen, 2000);
+            // Додатковий захист — прибираємо через 1.5 секунди в будь-якому випадку
+            setTimeout(hideLoadingScreen, 1500);
 
             // Оптимізований обробник ripple ефекту
             document.addEventListener('click', function(e) {
@@ -834,6 +840,12 @@
                     }
                 } catch(e) {
                     console.error('Navigation error:', e);
+                    // У випадку помилки пробуємо відновити домашню сторінку
+                    if (mainContent && section !== 'home') {
+                        try {
+                            mainContent.innerHTML = renderers.home();
+                        } catch(e2) {}
+                    }
                 }
                 
                 if (tg?.HapticFeedback) {
@@ -865,6 +877,51 @@
                     }
                 });
             }
+
+            // *** ГОЛОВНЕ ВИПРАВЛЕННЯ: Обробник видимості сторінки ***
+            // Відновлює контент при поверненні в додаток після згортання
+            document.addEventListener('visibilitychange', function() {
+                if (document.visibilityState === 'visible') {
+                    // Сторінка знову активна — відновлюємо все
+                    
+                    // 1. Прибираємо loading screen якщо він чомусь з'явився
+                    hideLoadingScreen();
+                    
+                    // 2. Перевіряємо чи контент на місці
+                    if (mainContent && (!mainContent.children || mainContent.children.length === 0)) {
+                        // Контент зник — відновлюємо поточну секцію
+                        navigate(state.section || 'home');
+                    }
+                    
+                    // 3. Переініціалізуємо Telegram WebApp
+                    if (tg) {
+                        try {
+                            tg.ready();
+                            tg.expand();
+                        } catch(e) {}
+                    }
+                    
+                    // 4. Примусово оновлюємо відображення
+                    if (appContainer) {
+                        appContainer.style.display = 'none';
+                        appContainer.offsetHeight; // force reflow
+                        appContainer.style.display = '';
+                    }
+                }
+            });
+            
+            // Додатковий обробник для resize (теж допомагає при поверненні)
+            let resizeTimeout;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(function() {
+                    if (tg) {
+                        try {
+                            tg.expand();
+                        } catch(e) {}
+                    }
+                }, 300);
+            });
 
             // Початкове завантаження
             navigate('home');
