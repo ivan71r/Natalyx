@@ -1,1198 +1,553 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>natalyx — Репетитор</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        :root {
-            --bg-primary: #0b0b20;
-            --bg-secondary: #111130;
-            --bg-card: #16163a;
-            --bg-card-hover: #1c1c48;
-            --accent: #7c5cfc;
-            --accent-light: #9b83ff;
-            --accent-glow: rgba(124, 92, 252, 0.25);
-            --green: #34c97c;
-            --green-bg: rgba(52, 201, 124, 0.12);
-            --orange: #f59e4b;
-            --orange-bg: rgba(245, 158, 75, 0.12);
-            --blue-info: #5b9cf5;
-            --blue-info-bg: rgba(91, 156, 245, 0.12);
-            --text-primary: #f0edff;
-            --text-secondary: #a5a0c8;
-            --text-muted: #6e6a8a;
-            --border-subtle: rgba(255, 255, 255, 0.06);
-            --border-card: rgba(255, 255, 255, 0.08);
-            --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.3), 0 0 1px rgba(255, 255, 255, 0.04) inset;
-            --shadow-elevated: 0 8px 32px rgba(0, 0, 0, 0.45);
-            --radius-sm: 10px;
-            --radius-md: 14px;
-            --radius-lg: 18px;
-            --radius-xl: 22px;
-            --font-system: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'San Francisco', 'Helvetica Neue',
-                Roboto, 'Segoe UI', system-ui, sans-serif;
-            --transition-fast: 0.15s ease-out;
-            --transition-smooth: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            --safe-bottom: env(safe-area-inset-bottom, 16px);
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Дневник активов | Asset Diary Premium</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, sans-serif;
+      background: #06080c;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 12px;
+      margin: 0;
+    }
 
-        html {
-            font-size: 16px;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            -webkit-tap-highlight-color: transparent;
-            -webkit-user-select: none;
-            user-select: none;
-            scroll-behavior: smooth;
-        }
+    /* Premium app shell */
+    .app-container {
+      max-width: 430px;
+      width: 100%;
+      height: 820px;
+      /* ============================================
+         ЗАМІНІТЬ ШЛЯХ НА ВАШЕ ФОТО ТУТ:
+         ============================================ */
+      background: 
+        linear-gradient(135deg, rgba(10, 14, 20, 0.85), rgba(6, 8, 12, 0.92)),
+        url('your-photo.jpg') center/cover no-repeat;
+      /* Якщо фото в тій самій папці: url('photo.jpg') */
+      /* Якщо фото в папці images: url('images/photo.jpg') */
+      /* Якщо фото з інтернету: url('https://example.com/photo.jpg') */
+      
+      border-radius: 38px;
+      box-shadow: 0 35px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.07);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      backdrop-filter: blur(20px);
+    }
 
-        body {
-            font-family: var(--font-system);
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            min-height: 100vh;
-            min-height: 100dvh;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            overflow-x: hidden;
-            padding-bottom: var(--safe-bottom);
-            background-image:
-                radial-gradient(ellipse at 50% 0%, rgba(124, 92, 252, 0.07) 0%, transparent 60%),
-                radial-gradient(ellipse at 85% 20%, rgba(91, 156, 245, 0.04) 0%, transparent 50%),
-                radial-gradient(ellipse at 15% 70%, rgba(124, 92, 252, 0.03) 0%, transparent 50%);
-        }
+    /* Додатковий варіант: фон для всього body */
+    /* Розкоментуйте цей блок, якщо хочете фото на весь екран */
+    /*
+    body {
+      background: 
+        linear-gradient(135deg, rgba(6, 8, 12, 0.7), rgba(2, 4, 8, 0.85)),
+        url('your-photo.jpg') center/cover no-repeat fixed;
+    }
+    */
 
-        .app-container {
-            width: 100%;
-            max-width: 430px;
-            min-height: 100vh;
-            min-height: 100dvh;
-            display: flex;
-            flex-direction: column;
-            padding: 16px 14px 24px;
-            gap: 16px;
-            position: relative;
-        }
+    /* Glassmorphism base */
+    .glass-card {
+      background: rgba(20, 25, 33, 0.6);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 24px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    }
 
-        .app-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            padding: 6px 4px 2px;
-        }
-        .header-brand {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .header-logo {
-            width: 36px;
-            height: 36px;
-            border-radius: var(--radius-sm);
-            background: linear-gradient(135deg, #7c5cfc 0%, #5b3ce8 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: #fff;
-            letter-spacing: -0.5px;
-            box-shadow: 0 4px 14px rgba(124, 92, 252, 0.4);
-        }
-        .header-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            letter-spacing: -0.3px;
-            color: var(--text-primary);
-        }
-        .balance-block {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .balance-amount {
-            font-size: 1.35rem;
-            font-weight: 700;
-            letter-spacing: -0.3px;
-            color: #fff;
-            background: var(--bg-card);
-            padding: 8px 14px;
-            border-radius: 30px;
-            border: 1px solid var(--border-card);
-            white-space: nowrap;
-            box-shadow: var(--shadow-card);
-        }
-        .balance-amount .currency {
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            margin-left: 2px;
-        }
-        .btn-add {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            background: var(--accent);
-            border: none;
-            color: #fff;
-            font-size: 1.5rem;
-            font-weight: 400;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 16px rgba(124, 92, 252, 0.45);
-            transition: transform var(--transition-fast), box-shadow var(--transition-fast),
-                background var(--transition-fast);
-            flex-shrink: 0;
-            line-height: 0;
-            padding: 0;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .btn-add:active {
-            transform: scale(0.9);
-            box-shadow: 0 2px 8px rgba(124, 92, 252, 0.6);
-            background: #6b4ae8;
-        }
+    .glass-light {
+      background: rgba(30, 36, 46, 0.5);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+    }
 
-        .summary-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 10px;
-        }
-        .summary-card {
-            background: var(--bg-card);
-            border-radius: var(--radius-md);
-            padding: 14px 10px;
-            text-align: center;
-            border: 1px solid var(--border-card);
-            box-shadow: var(--shadow-card);
-            transition: transform var(--transition-fast), border-color var(--transition-fast);
-            cursor: default;
-            position: relative;
-            overflow: hidden;
-        }
-        .summary-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 32px;
-            height: 3px;
-            border-radius: 0 0 6px 6px;
-        }
-        .summary-card.card-income::after {
-            background: var(--green);
-        }
-        .summary-card.card-unpaid::after {
-            background: var(--orange);
-        }
-        .summary-card.card-lessons::after {
-            background: var(--blue-info);
-        }
-        .summary-icon {
-            font-size: 1.3rem;
-            margin-bottom: 4px;
-            display: block;
-        }
-        .summary-label {
-            font-size: 0.7rem;
-            font-weight: 500;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.6px;
-            margin-bottom: 3px;
-        }
-        .summary-value {
-            font-size: 1.15rem;
-            font-weight: 700;
-            letter-spacing: -0.2px;
-            color: #fff;
-            white-space: nowrap;
-        }
-        .summary-value.income-val {
-            color: var(--green);
-        }
-        .summary-value.unpaid-val {
-            color: var(--orange);
-        }
-        .summary-value.lessons-val {
-            color: var(--blue-info);
-        }
+    .header {
+      padding: 16px 20px 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
 
-        .calendar-section {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        .calendar-nav {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 4px;
-        }
-        .calendar-month-title {
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: #fff;
-            letter-spacing: -0.2px;
-            cursor: pointer;
-            -webkit-tap-highlight-color: transparent;
-            padding: 4px 12px;
-            border-radius: 20px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-card);
-            transition: background var(--transition-fast);
-        }
-        .calendar-month-title:active {
-            background: var(--bg-card-hover);
-        }
-        .calendar-nav-btn {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            border: 1px solid var(--border-card);
-            background: var(--bg-card);
-            color: var(--text-secondary);
-            font-size: 1.2rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all var(--transition-fast);
-            -webkit-tap-highlight-color: transparent;
-            line-height: 0;
-            padding: 0;
-        }
-        .calendar-nav-btn:active {
-            background: var(--bg-card-hover);
-            color: #fff;
-            transform: scale(0.92);
-        }
-        .calendar-grid-header {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            text-align: center;
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            padding: 2px 2px 4px;
-            letter-spacing: 0.3px;
-        }
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 4px;
-            text-align: center;
-        }
-        .calendar-day {
-            aspect-ratio: 1 / 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border-radius: var(--radius-sm);
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #d0d0e0;
-            cursor: pointer;
-            transition: all var(--transition-fast);
-            position: relative;
-            -webkit-tap-highlight-color: transparent;
-            background: transparent;
-            border: 1px solid transparent;
-        }
-        .calendar-day:active {
-            transform: scale(0.9);
-        }
-        .calendar-day.other-month {
-            color: #4a4768;
-            pointer-events: none;
-            opacity: 0.4;
-        }
-        .calendar-day.today {
-            border: 1px solid var(--accent-light);
-            color: #fff;
-            font-weight: 700;
-            background: rgba(124, 92, 252, 0.15);
-        }
-        .calendar-day.selected {
-            background: var(--accent);
-            color: #fff;
-            border-color: var(--accent-light);
-            box-shadow: 0 4px 14px var(--accent-glow);
-            font-weight: 700;
-            transform: none;
-        }
-        .calendar-day .dot {
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            background: var(--accent-light);
-            position: absolute;
-            bottom: 6px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        .calendar-day.selected .dot {
-            background: #fff;
-        }
-        .calendar-day.today .dot {
-            background: var(--accent-light);
-        }
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-        .lessons-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 4px;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .lessons-title {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .lessons-count-badge {
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            background: var(--bg-card);
-            padding: 4px 10px;
-            border-radius: 20px;
-            border: 1px solid var(--border-card);
-        }
-        .btn-clear-all {
-            background: transparent;
-            border: 1px solid var(--border-card);
-            color: var(--text-muted);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all var(--transition-fast);
-            -webkit-tap-highlight-color: transparent;
-        }
-        .btn-clear-all:active {
-            background: rgba(245, 158, 75, 0.15);
-            color: var(--orange);
-        }
+    .logo-icon {
+      background: linear-gradient(135deg, #f0b73e, #d4912a);
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 10px 18px rgba(240, 183, 62, 0.3);
+    }
 
-        .lessons-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .lesson-card {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: var(--bg-card);
-            border-radius: var(--radius-lg);
-            padding: 14px 16px;
-            border: 1px solid var(--border-card);
-            box-shadow: var(--shadow-card);
-            transition: all var(--transition-smooth);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .lesson-card:active {
-            transform: scale(0.985);
-            background: var(--bg-card-hover);
-        }
-        .lesson-card.paid {
-            border-left: 3px solid var(--green);
-        }
-        .lesson-card.unpaid {
-            border-left: 3px solid var(--orange);
-        }
-        .lesson-time-block {
-            flex-shrink: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2px;
-            min-width: 56px;
-        }
-        .lesson-time {
-            font-size: 0.95rem;
-            font-weight: 700;
-            letter-spacing: -0.2px;
-            color: #fff;
-        }
-        .lesson-duration {
-            font-size: 0.65rem;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-        .lesson-info {
-            flex: 1;
-            min-width: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-        }
-        .lesson-student {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #fff;
-            letter-spacing: -0.2px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .lesson-subject {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            font-weight: 400;
-        }
-        .lesson-price {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-        }
-        .lesson-status {
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-        }
-        .payment-checkbox {
-            position: relative;
-            width: 28px;
-            height: 28px;
-            flex-shrink: 0;
-            cursor: pointer;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .payment-checkbox input {
-            position: absolute;
-            opacity: 0;
-            width: 0;
-            height: 0;
-            pointer-events: none;
-        }
-        .checkmark {
-            position: absolute;
-            inset: 0;
-            border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.25);
-            background: transparent;
-            transition: all var(--transition-fast);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .checkmark::after {
-            content: '';
-            width: 10px;
-            height: 6px;
-            border-left: 2px solid #fff;
-            border-bottom: 2px solid #fff;
-            transform: rotate(-45deg) translateY(-1px);
-            opacity: 0;
-            transition: opacity var(--transition-fast);
-        }
-        .payment-checkbox input:checked+.checkmark {
-            background: var(--green);
-            border-color: var(--green);
-            box-shadow: 0 0 12px rgba(52, 201, 124, 0.4);
-        }
-        .payment-checkbox input:checked+.checkmark::after {
-            opacity: 1;
-        }
+    .brand-text {
+      font-weight: 700;
+      font-size: 1.3rem;
+      letter-spacing: -0.3px;
+      background: linear-gradient(to right, #f0f4ff, #cbd5e6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
-        .lesson-delete {
-            flex-shrink: 0;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #f59e4b;
-            font-size: 1rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all var(--transition-fast);
-            -webkit-tap-highlight-color: transparent;
-            margin-left: 4px;
-        }
-        .lesson-delete:active {
-            background: rgba(245, 158, 75, 0.2);
-            transform: scale(0.9);
-        }
+    .pro-badge {
+      background: rgba(240, 183, 62, 0.15);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #f0b73e;
+      letter-spacing: 0.5px;
+      border: 1px solid rgba(240, 183, 62, 0.35);
+    }
 
-        .empty-state {
-            text-align: center;
-            padding: 32px 20px;
-            color: var(--text-muted);
-        }
-        .empty-state .empty-icon {
-            font-size: 3rem;
-            display: block;
-            margin-bottom: 10px;
-            opacity: 0.5;
-        }
-        .empty-state .empty-text {
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
+    .main-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px 16px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      scrollbar-width: thin;
+      scrollbar-color: #2a3340 #0f1319;
+    }
 
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            z-index: 100;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity var(--transition-smooth);
-        }
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-        .modal-sheet {
-            width: 100%;
-            max-width: 430px;
-            background: var(--bg-secondary);
-            border-radius: var(--radius-xl) var(--radius-xl) 0 0;
-            padding: 20px 18px 28px;
-            box-shadow: var(--shadow-elevated);
-            transform: translateY(100%);
-            transition: transform var(--transition-smooth);
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            max-height: 85vh;
-            overflow-y: auto;
-        }
-        .modal-overlay.active .modal-sheet {
-            transform: translateY(0);
-        }
-        .modal-handle {
-            width: 36px;
-            height: 4px;
-            border-radius: 4px;
-            background: rgba(255, 255, 255, 0.2);
-            align-self: center;
-            margin-bottom: 4px;
-        }
-        .modal-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            letter-spacing: -0.2px;
-            color: #fff;
-            text-align: center;
-        }
-        .modal-field {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-        .modal-field label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.4px;
-        }
-        .modal-field input {
-            padding: 12px 14px;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border-card);
-            background: var(--bg-card);
-            color: #fff;
-            font-size: 1rem;
-            font-family: var(--font-system);
-            outline: none;
-            transition: border-color var(--transition-fast);
-            -webkit-user-select: text;
-            user-select: text;
-        }
-        .modal-field input:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px var(--accent-glow);
-        }
-        .modal-field input::placeholder {
-            color: var(--text-muted);
-        }
-        .modal-field input[type="date"] {
-            color-scheme: dark;
-            -webkit-appearance: none;
-            appearance: none;
-            position: relative;
-        }
-        .modal-field input[type="date"]::-webkit-calendar-picker-indicator {
-            filter: invert(1);
-            opacity: 0.7;
-            cursor: pointer;
-        }
-        .modal-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 4px;
-        }
-        .btn {
-            flex: 1;
-            padding: 13px 16px;
-            border-radius: 30px;
-            border: none;
-            font-size: 0.95rem;
-            font-weight: 600;
-            cursor: pointer;
-            font-family: var(--font-system);
-            letter-spacing: -0.2px;
-            transition: all var(--transition-fast);
-            -webkit-tap-highlight-color: transparent;
-        }
-        .btn:active {
-            transform: scale(0.95);
-        }
-        .btn-primary {
-            background: var(--accent);
-            color: #fff;
-            box-shadow: 0 4px 16px rgba(124, 92, 252, 0.4);
-        }
-        .btn-secondary {
-            background: transparent;
-            color: var(--text-secondary);
-            border: 1px solid var(--border-card);
-        }
+    .main-content::-webkit-scrollbar {
+      width: 4px;
+    }
+    .main-content::-webkit-scrollbar-track {
+      background: #0f1319;
+      border-radius: 8px;
+    }
+    .main-content::-webkit-scrollbar-thumb {
+      background: #2a3340;
+      border-radius: 8px;
+    }
 
-        .toast {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%) translateY(-120px);
-            background: var(--bg-card);
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            z-index: 200;
-            pointer-events: none;
-            border: 1px solid var(--border-card);
-            box-shadow: var(--shadow-elevated);
-            transition: transform var(--transition-smooth);
-            white-space: nowrap;
-        }
-        .toast.visible {
-            transform: translateX(-50%) translateY(0);
-        }
+    /* Typography */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #eef3ff;
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 6px;
+    }
 
-        @media (max-width: 360px) {
-            .summary-row {
-                gap: 6px;
-            }
-            .summary-card {
-                padding: 10px 6px;
-            }
-            .summary-value {
-                font-size: 1rem;
-            }
-            .calendar-day {
-                font-size: 0.75rem;
-            }
-        }
-        @media (min-width: 431px) {
-            .app-container {
-                border-left: 1px solid var(--border-subtle);
-                border-right: 1px solid var(--border-subtle);
-                box-shadow: 0 0 60px rgba(0, 0, 0, 0.4);
-            }
-            body {
-                align-items: center;
-                padding: 20px 0;
-            }
-        }
-    </style>
+    .welcome-banner {
+      background: linear-gradient(105deg, rgba(22, 30, 40, 0.85), rgba(12, 18, 26, 0.9));
+      border-radius: 26px;
+      padding: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(12px);
+    }
+
+    .creator-name {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: white;
+    }
+
+    .accent {
+      color: #f0b73e;
+    }
+
+    .chips {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      background: rgba(255, 255, 255, 0.06);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      color: #cfddee;
+      backdrop-filter: blur(5px);
+    }
+
+    .grid-nav {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 6px 0;
+    }
+
+    .nav-card {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(10px);
+      border-radius: 18px;
+      padding: 14px 4px;
+      text-align: center;
+      color: #bccfe0;
+      font-size: 0.7rem;
+      font-weight: 500;
+      border: 1px solid rgba(255,255,255,0.03);
+      transition: 0.2s;
+      cursor: pointer;
+    }
+    .nav-card span {
+      display: block;
+      font-size: 1.5rem;
+      margin-bottom: 4px;
+    }
+
+    .video-item, .news-item, .post-item {
+      background: rgba(18, 24, 32, 0.7);
+      backdrop-filter: blur(14px);
+      border-radius: 22px;
+      padding: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      margin-bottom: 12px;
+    }
+
+    .video-thumb {
+      background: linear-gradient(135deg, #243040, #151e28);
+      height: 90px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      font-size: 2rem;
+    }
+
+    .btn-gold {
+      background: #f0b73e;
+      border: none;
+      color: #0a0c10;
+      font-weight: 700;
+      padding: 8px 18px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .bottom-nav {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 10px 12px 18px;
+      background: rgba(8, 12, 16, 0.85);
+      backdrop-filter: blur(30px);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 30px 30px 0 0;
+    }
+
+    .nav-icon {
+      color: #6a7a8e;
+      font-size: 1.3rem;
+      text-align: center;
+      transition: 0.2s;
+      cursor: pointer;
+    }
+    .nav-icon.active {
+      color: #f0b73e;
+      text-shadow: 0 0 10px rgba(240,183,62,0.6);
+    }
+
+    .poll-bar {
+      background: rgba(255,255,255,0.06);
+      height: 6px;
+      border-radius: 6px;
+      margin: 8px 0;
+      overflow: hidden;
+    }
+    .poll-fill {
+      height: 6px;
+      background: #f0b73e;
+      border-radius: 6px;
+    }
+
+    .badge-notif {
+      background: #e63946;
+      border-radius: 12px;
+      padding: 2px 8px;
+      font-size: 0.7rem;
+      margin-left: 6px;
+      color: white;
+    }
+  </style>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-    <div class="app-container">
-        <header class="app-header">
-            <div class="header-brand">
-                <div class="header-logo">NX</div>
-                <span class="header-title">natalyx</span>
-            </div>
-            <div class="balance-block">
-                <span class="balance-amount" id="headerBalance">0<span class="currency">₴</span></span>
-                <button class="btn-add" id="btnAddLesson" aria-label="Додати заняття">+</button>
-            </div>
-        </header>
-
-        <div class="summary-row">
-            <div class="summary-card card-income">
-                <span class="summary-icon">💰</span>
-                <span class="summary-label">Надходження</span>
-                <span class="summary-value income-val" id="summaryIncome">0 ₴</span>
-            </div>
-            <div class="summary-card card-unpaid">
-                <span class="summary-icon">⚠️</span>
-                <span class="summary-label">Неоплачено</span>
-                <span class="summary-value unpaid-val" id="summaryUnpaid">0 ₴</span>
-            </div>
-            <div class="summary-card card-lessons">
-                <span class="summary-icon">📅</span>
-                <span class="summary-label">Занять</span>
-                <span class="summary-value lessons-val" id="summaryLessons">0</span>
-            </div>
-        </div>
-
-        <div class="calendar-section">
-            <div class="calendar-nav">
-                <button class="calendar-nav-btn" id="btnPrevMonth" aria-label="Попередній місяць">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-                </button>
-                <span class="calendar-month-title" id="calendarMonthTitle"></span>
-                <button class="calendar-nav-btn" id="btnNextMonth" aria-label="Наступний місяць">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                </button>
-            </div>
-            <div class="calendar-grid-header">
-                <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Нд</span>
-            </div>
-            <div class="calendar-grid" id="calendarGrid"></div>
-        </div>
-
-        <div class="lessons-header">
-            <span class="lessons-title">Список занять</span>
-            <span class="lessons-count-badge" id="lessonsCountBadge">0 занять</span>
-            <button id="btnClearAll" class="btn-clear-all" aria-label="Очистити всі заняття">🗑️ Очистити все</button>
-        </div>
-        <div class="lessons-list" id="lessonsList"></div>
+  <div class="app-container" id="app">
+    <div class="header">
+      <div class="logo-area">
+        <div class="logo-icon">📈</div>
+        <span class="brand-text">Дневник активов</span>
+      </div>
+      <div class="pro-badge">PREMIUM</div>
     </div>
 
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-sheet">
-            <div class="modal-handle"></div>
-            <h3 class="modal-title">Нове заняття</h3>
-            <div class="modal-field">
-                <label for="inputDate">Дата</label>
-                <input type="date" id="inputDate" autocomplete="off">
-            </div>
-            <div class="modal-field">
-                <label for="inputStudent">Ім'я учня</label>
-                <input type="text" id="inputStudent" placeholder="Наприклад, Марія Коваленко" autocomplete="off">
-            </div>
-            <div class="modal-field">
-                <label for="inputSubject">Предмет</label>
-                <input type="text" id="inputSubject" placeholder="Наприклад, Математика" autocomplete="off">
-            </div>
-            <div class="modal-field">
-                <label for="inputTime">Час (години)</label>
-                <input type="text" id="inputTime" placeholder="18:00 - 19:00" autocomplete="off">
-            </div>
-            <div class="modal-field">
-                <label for="inputPrice">Вартість (₴)</label>
-                <input type="number" id="inputPrice" placeholder="500" min="0" step="50" autocomplete="off">
-            </div>
-            <div class="modal-actions">
-                <button class="btn btn-secondary" id="btnCancel">Скасувати</button>
-                <button class="btn btn-primary" id="btnSave">Додати</button>
-            </div>
-        </div>
+    <div class="main-content" id="mainContent"></div>
+
+    <div class="bottom-nav">
+      <div class="nav-icon active" data-section="home">🏠</div>
+      <div class="nav-icon" data-section="videos">🎬</div>
+      <div class="nav-icon" data-section="news">📰</div>
+      <div class="nav-icon" data-section="community">💬</div>
+      <div class="nav-icon" data-section="profile">👤</div>
     </div>
+  </div>
 
-    <div class="toast" id="toast"></div>
+  <script>
+    (function() {
+      const tg = window.Telegram?.WebApp;
+      if (tg) {
+        tg.ready();
+        tg.expand();
+        tg.setHeaderColor('secondary_bg_color');
+        tg.setBackgroundColor('#06080c');
+      }
 
-    <script>
-        (function() {
-            const tg = window.Telegram?.WebApp;
-            let hapticAvailable = false;
+      const state = {
+        section: 'home',
+        bookmarks: new Set(),
+        notifications: 3
+      };
 
-            function initTelegram() {
-                if (tg) {
-                    try {
-                        tg.ready();
-                        tg.expand();
-                        if (tg.setHeaderColor) tg.setHeaderColor('#0b0b20');
-                        if (tg.setBackgroundColor) tg.setBackgroundColor('#0b0b20');
-                        hapticAvailable = !!(tg.HapticFeedback);
-                    } catch (e) { /* silent */ }
-                }
-            }
+      // Extended content database
+      const data = {
+        videos: [
+          { title: "Биткоин после халвинга", desc: "Полный разбор рыночного цикла", thumb: "🎥" },
+          { title: "DeFi стратегии 2026", desc: "Пассивный доход в крипте", thumb: "📊" },
+          { title: "Альткоины: топ-5", desc: "Перспективные монеты", thumb: "🔮" }
+        ],
+        news: [
+          { title: "ETF приток $2.1B", badge: "Срочно", text: "Институционалы заходят в рынок." },
+          { title: "Регуляция США", text: "Новый законопроект о стейблкоинах." }
+        ],
+        polls: [
+          { question: "Курс BTC к декабрю?", options: ["$130k+", "$100-130k", "Ниже $100k"], votes: [58, 27, 15] }
+        ],
+        education: [
+          { title: "Блокчейн для начинающих", level: "Базовый" },
+          { title: "Продвинутый трейдинг", level: "Профи" },
+          { title: "Инвестиционные гиды", level: "Средний" }
+        ]
+      };
 
-            function hapticLight() { if (hapticAvailable) try { tg.HapticFeedback.impactOccurred('light'); } catch (e) {} }
-            function hapticSuccess() { if (hapticAvailable) try { tg.HapticFeedback.notificationOccurred('success'); } catch (e) {} }
-            function hapticWarning() { if (hapticAvailable) try { tg.HapticFeedback.notificationOccurred('warning'); } catch (e) {} }
+      function renderHome() {
+        return `
+          <div class="welcome-banner">
+            <div style="display:flex; justify-content:space-between;">
+              <div>
+                <div class="creator-name">Алекс <span class="accent">Крипто</span></div>
+                <div style="color:#a0b3cc; font-size:0.8rem;">Дневник активов | Premium</div>
+              </div>
+              <div style="background:#f0b73e20; border-radius:20px; padding:6px 14px; color:#f0b73e;">⭐ 4.9</div>
+            </div>
+            <div class="chips">
+              <span class="chip">🔔 Новое видео</span>
+              <span class="chip">📊 Портфель +5.1%</span>
+              <span class="chip">💎 Premium открыт</span>
+            </div>
+          </div>
+          
+          <div class="section-header">⚡ Быстрый доступ</div>
+          <div class="grid-nav">
+            <div class="nav-card" data-nav="videos"><span>🎬</span>Видео</div>
+            <div class="nav-card" data-nav="news"><span>📰</span>Новости</div>
+            <div class="nav-card" data-nav="community"><span>💬</span>Посты</div>
+            <div class="nav-card" data-nav="polls"><span>📊</span>Опросы</div>
+            <div class="nav-card" data-nav="education"><span>📚</span>Обучение</div>
+            <div class="nav-card" data-nav="links"><span>🔗</span>Ссылки</div>
+            <div class="nav-card" data-nav="portfolio"><span>💼</span>Портфель</div>
+            <div class="nav-card" data-nav="faq"><span>❓</span>FAQ</div>
+          </div>
 
-            const today = new Date();
-            const dayMs = 86400000;
+          <div class="section-header">📢 Объявления <span class="badge-notif">2</span></div>
+          <div class="news-item">
+            <strong style="color:white;">Premium членство открыто</strong>
+            <p style="color:#b0c0d0; font-size:0.8rem;">Ранний доступ к альфа-отчётам.</p>
+          </div>
+        `;
+      }
 
-            function fmtDate(d) {
-                const y = d.getFullYear();
-                const m = String(d.getMonth() + 1).padStart(2, '0');
-                const day = String(d.getDate()).padStart(2, '0');
-                return `${y}-${m}-${day}`;
-            }
+      function renderVideos() {
+        return `
+          <div class="section-header">🎬 Последние видео <span style="font-size:0.7rem;">🔍 Поиск</span></div>
+          ${data.videos.map(v => `
+            <div class="video-item">
+              <div class="video-thumb">${v.thumb}</div>
+              <strong style="color:white;">${v.title}</strong>
+              <div style="color:#9aaec9; font-size:0.8rem;">${v.desc}</div>
+              <button class="btn-gold watch-btn">▶ Смотреть</button>
+            </div>
+          `).join('')}
+        `;
+      }
 
-            function parseDate(str) {
-                const [y, m, d] = str.split('-').map(Number);
-                return new Date(y, m - 1, d);
-            }
+      function renderNews() {
+        return `
+          <div class="section-header">📰 Новости и рынок</div>
+          ${data.news.map(n => `
+            <div class="news-item">
+              <div style="display:flex; justify-content:space-between;">
+                <strong style="color:white;">${n.title}</strong>
+                ${n.badge ? '<span class="badge-notif">${n.badge}</span>' : ''}
+              </div>
+              <div style="color:#b0c0d0; font-size:0.8rem;">${n.text}</div>
+            </div>
+          `).join('')}
+        `;
+      }
 
-            const todayStr = fmtDate(today);
-            function dateFromToday(offset) { const d = new Date(today.getTime() + offset * dayMs); return fmtDate(d); }
+      function renderCommunity() {
+        return `
+          <div class="section-header">💬 Сообщество</div>
+          <div class="post-item">
+            <div style="color:white; font-weight:600;">Мнение: Альтсезон близко?</div>
+            <div style="color:#95a9c2;">Анализ пары ETH/BTC...</div>
+            <div style="display:flex; gap:16px; margin-top:10px; color:#f0b73e;">👍 34 💬 12 🔖</div>
+          </div>
+          <div class="post-item">
+            <div style="color:white; font-weight:600;">Обучение: Что такое TVL?</div>
+            <div style="color:#95a9c2;">Total Value Locked объяснение.</div>
+            <div style="display:flex; gap:16px; margin-top:10px; color:#f0b73e;">👍 52 💬 8</div>
+          </div>
+        `;
+      }
 
-            // ========== localStorage ==========
-            const STORAGE_KEY = 'natalyx_lessons';
+      function renderPolls() {
+        return `
+          <div class="section-header">📊 Опросы и голосования</div>
+          ${data.polls.map(p => `
+            <div class="glass-card" style="padding:16px; margin-bottom:14px;">
+              <div style="color:white; font-weight:600;">${p.question}</div>
+              ${p.options.map((opt, i) => `
+                <div style="margin-top:10px;">
+                  <div style="display:flex; justify-content:space-between; color:#cfddee; font-size:0.8rem;">
+                    <span>${opt}</span><span>${p.votes[i]}%</span>
+                  </div>
+                  <div class="poll-bar"><div class="poll-fill" style="width:${p.votes[i]}%;"></div></div>
+                </div>
+              `).join('')}
+            </div>
+          `).join('')}
+        `;
+      }
 
-            let lessons = [];
-            let nextId = 1;
+      function renderEducation() {
+        return `
+          <div class="section-header">📚 Крипто образование</div>
+          ${data.education.map(e => `
+            <div class="news-item" style="display:flex; justify-content:space-between;">
+              <span style="color:white;">${e.title}</span>
+              <span style="color:#f0b73e; font-size:0.7rem;">${e.level}</span>
+            </div>
+          `).join('')}
+        `;
+      }
 
-            function loadLessonsFromStorage() {
-                try {
-                    const raw = localStorage.getItem(STORAGE_KEY);
-                    if (raw) {
-                        const parsed = JSON.parse(raw);
-                        if (Array.isArray(parsed) && parsed.length > 0) {
-                            lessons = parsed;
-                            nextId = Math.max(...lessons.map(l => l.id), 0) + 1;
-                        }
-                    }
-                } catch (e) {
-                    console.warn('Не вдалося завантажити заняття:', e);
-                }
-            }
+      function renderLinks() {
+        return `
+          <div class="section-header">🔗 Полезные ссылки</div>
+          <div class="news-item">📺 YouTube канал</div>
+          <div class="news-item">💱 Рекомендованные биржи</div>
+          <div class="news-item">📊 Трекер портфеля</div>
+          <div class="news-item">🤝 Партнёрские ресурсы</div>
+        `;
+      }
 
-            function saveLessonsToStorage() {
-                try {
-                    localStorage.setItem(STORAGE_KEY, JSON.stringify(lessons));
-                } catch (e) {
-                    showToast('⚠️ Помилка збереження');
-                }
-            }
+      function renderPortfolio() {
+        return `
+          <div class="section-header">💼 Портфель создателя</div>
+          <div class="glass-card" style="padding:16px;">
+            <div style="color:white;">BTC 45% | ETH 30% | SOL 15% | Другое 10%</div>
+            <div class="poll-bar" style="margin:12px 0;"><div class="poll-fill" style="width:72%;"></div></div>
+            <div style="color:#a0b8d0;">+24.8% за всё время</div>
+          </div>
+        `;
+      }
 
-            // ========== інші змінні ==========
-            let selectedDate = todayStr;
+      function renderFAQ() {
+        return `
+          <div class="section-header">❓ FAQ</div>
+          <div class="news-item">🔹 Что такое стейкинг?</div>
+          <div class="news-item">🔹 Как вступить в Premium?</div>
+          <div class="news-item">🔹 Безопасность активов</div>
+        `;
+      }
 
-            const $headerBalance = document.getElementById('headerBalance');
-            const $summaryIncome = document.getElementById('summaryIncome');
-            const $summaryUnpaid = document.getElementById('summaryUnpaid');
-            const $summaryLessons = document.getElementById('summaryLessons');
-            const $calendarGrid = document.getElementById('calendarGrid');
-            const $calendarMonthTitle = document.getElementById('calendarMonthTitle');
-            const $btnPrevMonth = document.getElementById('btnPrevMonth');
-            const $btnNextMonth = document.getElementById('btnNextMonth');
-            const $lessonsList = document.getElementById('lessonsList');
-            const $lessonsCountBadge = document.getElementById('lessonsCountBadge');
-            const $btnAdd = document.getElementById('btnAddLesson');
-            const $modalOverlay = document.getElementById('modalOverlay');
-            const $btnCancel = document.getElementById('btnCancel');
-            const $btnSave = document.getElementById('btnSave');
-            const $inputDate = document.getElementById('inputDate');
-            const $inputStudent = document.getElementById('inputStudent');
-            const $inputSubject = document.getElementById('inputSubject');
-            const $inputTime = document.getElementById('inputTime');
-            const $inputPrice = document.getElementById('inputPrice');
-            const $toast = document.getElementById('toast');
-            const $btnClearAll = document.getElementById('btnClearAll');
+      function renderProfile() {
+        return `
+          <div class="welcome-banner" style="text-align:center;">
+            <div style="font-size:3rem;">👤</div>
+            <div style="color:white; font-weight:700;">Профиль</div>
+            <div style="color:#b0c2d8;">Сохранено: ${state.bookmarks.size}</div>
+            <div style="color:#f0b73e;">Premium статус активен</div>
+          </div>
+        `;
+      }
 
-            let toastTimer;
+      const renderers = {
+        home: renderHome, videos: renderVideos, news: renderNews,
+        community: renderCommunity, polls: renderPolls, education: renderEducation,
+        links: renderLinks, portfolio: renderPortfolio, faq: renderFAQ, profile: renderProfile
+      };
 
-            function showToast(message) {
-                clearTimeout(toastTimer);
-                $toast.textContent = message;
-                $toast.classList.add('visible');
-                toastTimer = setTimeout(() => $toast.classList.remove('visible'), 1800);
-            }
+      function navigate(section) {
+        state.section = section;
+        document.getElementById('mainContent').innerHTML = renderers[section]?.() || '';
+        document.querySelectorAll('.nav-icon').forEach(el => {
+          el.classList.toggle('active', el.dataset.section === section);
+        });
+        if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+      }
 
-            function getFilteredLessons() { return lessons.filter(l => l.date === selectedDate); }
+      // Event listeners
+      document.querySelectorAll('.nav-icon').forEach(icon => {
+        icon.addEventListener('click', (e) => navigate(e.currentTarget.dataset.section));
+      });
 
-            function computeSummaries() {
-                const allPaid = lessons.filter(l => l.isPaid);
-                const allUnpaid = lessons.filter(l => !l.isPaid);
-                return {
-                    income: allPaid.reduce((s, l) => s + l.price, 0),
-                    unpaid: allUnpaid.reduce((s, l) => s + l.price, 0),
-                    totalLessons: lessons.length
-                };
-            }
+      document.getElementById('mainContent').addEventListener('click', (e) => {
+        const navCard = e.target.closest('.nav-card');
+        if (navCard?.dataset.nav) navigate(navCard.dataset.nav);
+        if (e.target.classList.contains('watch-btn')) {
+          tg?.showAlert('🎬 Видео открывается...');
+        }
+        if (e.target.closest('.poll-bar')) {
+          tg?.showAlert('✅ Голос принят!');
+        }
+      });
 
-            function updateSummaries() {
-                const { income, unpaid, totalLessons } = computeSummaries();
-                $headerBalance.innerHTML = `${income.toLocaleString('uk-UA')}<span class="currency">₴</span>`;
-                $summaryIncome.textContent = `${income.toLocaleString('uk-UA')} ₴`;
-                $summaryUnpaid.textContent = `${unpaid.toLocaleString('uk-UA')} ₴`;
-                $summaryLessons.textContent = totalLessons;
-                updateCountBadge();
-            }
-
-            function updateCountBadge() {
-                const filtered = getFilteredLessons();
-                const count = filtered.length;
-                const word = count === 1 ? 'заняття' : (count >= 2 && count <= 4 ? 'заняття' : 'занять');
-                $lessonsCountBadge.textContent = `${count} ${word}`;
-            }
-
-            function escapeHTML(str) {
-                const div = document.createElement('div');
-                div.textContent = str;
-                return div.innerHTML;
-            }
-
-            function renderLessons() {
-                const filtered = getFilteredLessons();
-                $lessonsList.innerHTML = '';
-                if (filtered.length === 0) {
-                    $lessonsList.innerHTML = `<div class="empty-state"><span class="empty-icon">📭</span><span class="empty-text">На цю дату занять немає</span></div>`;
-                    return;
-                }
-                filtered.sort((a, b) => a.time.localeCompare(b.time));
-                filtered.forEach(lesson => {
-                    const card = document.createElement('div');
-                    card.className = `lesson-card ${lesson.isPaid ? 'paid' : 'unpaid'}`;
-                    card.dataset.id = lesson.id;
-                    card.innerHTML = `
-                        <div class="lesson-time-block">
-                            <span class="lesson-time">${escapeHTML(lesson.time.split(' - ')[0])}</span>
-                            <span class="lesson-duration">${escapeHTML(lesson.time)}</span>
-                        </div>
-                        <div class="lesson-info">
-                            <span class="lesson-student">${escapeHTML(lesson.student)}</span>
-                            <span class="lesson-subject">${escapeHTML(lesson.subject)}</span>
-                            <span class="lesson-price">${lesson.price} ₴</span>
-                        </div>
-                        <div class="lesson-status">
-                            <label class="payment-checkbox" aria-label="Статус оплати">
-                                <input type="checkbox" ${lesson.isPaid ? 'checked' : ''} data-id="${lesson.id}">
-                                <span class="checkmark"></span>
-                            </label>
-                        </div>
-                        <button class="lesson-delete" data-id="${lesson.id}" aria-label="Видалити заняття">🗑️</button>`;
-
-                    const checkbox = card.querySelector('input[type="checkbox"]');
-                    checkbox.addEventListener('change', (e) => {
-                        e.stopPropagation();
-                        const id = parseInt(checkbox.dataset.id);
-                        const obj = lessons.find(l => l.id === id);
-                        if (obj) {
-                            obj.isPaid = checkbox.checked;
-                            saveLessonsToStorage();
-                            obj.isPaid ? (hapticSuccess(), showToast('✅ Оплачено!')) : (hapticWarning(), showToast('⚠️ Позначено неоплаченим'));
-                            renderLessons();
-                            renderCalendar();
-                            updateSummaries();
-                        }
-                    });
-
-                    card.addEventListener('click', (e) => {
-                        if (e.target.tagName === 'INPUT' || e.target.classList.contains('checkmark') || e.target.classList.contains('lesson-delete')) return;
-                        hapticLight();
-                        const id = parseInt(card.dataset.id);
-                        const obj = lessons.find(l => l.id === id);
-                        if (obj) {
-                            obj.isPaid = !obj.isPaid;
-                            saveLessonsToStorage();
-                            obj.isPaid ? (hapticSuccess(), showToast('✅ Оплачено!')) : (hapticWarning(), showToast('⚠️ Позначено неоплаченим'));
-                            renderLessons();
-                            renderCalendar();
-                            updateSummaries();
-                        }
-                    });
-
-                    const deleteBtn = card.querySelector('.lesson-delete');
-                    deleteBtn.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        const id = parseInt(deleteBtn.dataset.id);
-                        lessons = lessons.filter(l => l.id !== id);
-                        saveLessonsToStorage();
-                        hapticWarning();
-                        showToast('🗑️ Заняття видалено');
-                        renderLessons();
-                        renderCalendar();
-                        updateSummaries();
-                    });
-
-                    $lessonsList.appendChild(card);
-                });
-            }
-
-            // ── month calendar state ──
-            let calendarYear = today.getFullYear();
-            let calendarMonth = today.getMonth();
-
-            const monthNames = ['Січень', 'Лютий', 'Березень', 'Квітень', 'Травень', 'Червень',
-                'Липень', 'Серпень', 'Вересень', 'Жовтень', 'Листопад', 'Грудень'];
-
-            function getDaysWithLessons() {
-                const set = new Set();
-                lessons.forEach(l => set.add(l.date));
-                return set;
-            }
-
-            function renderCalendar() {
-                $calendarMonthTitle.textContent = `${monthNames[calendarMonth]} ${calendarYear}`;
-                const firstDay = new Date(calendarYear, calendarMonth, 1);
-                const lastDay = new Date(calendarYear, calendarMonth + 1, 0);
-                const daysInMonth = lastDay.getDate();
-                let startDow = firstDay.getDay();
-                startDow = startDow === 0 ? 6 : startDow - 1;
-                const totalCells = Math.ceil((startDow + daysInMonth) / 7) * 7;
-                const lessonDates = getDaysWithLessons();
-                $calendarGrid.innerHTML = '';
-                for (let i = 0; i < totalCells; i++) {
-                    const dayNum = i - startDow + 1;
-                    const isCurrentMonth = dayNum >= 1 && dayNum <= daysInMonth;
-                    const cellDate = isCurrentMonth ? new Date(calendarYear, calendarMonth, dayNum) : null;
-                    const dateStr = cellDate ? fmtDate(cellDate) : '';
-                    const cell = document.createElement('div');
-                    cell.className = 'calendar-day';
-                    if (!isCurrentMonth) cell.classList.add('other-month');
-                    if (dateStr === todayStr) cell.classList.add('today');
-                    if (dateStr === selectedDate && isCurrentMonth) cell.classList.add('selected');
-                    cell.textContent = isCurrentMonth ? dayNum : '';
-                    if (isCurrentMonth && lessonDates.has(dateStr)) {
-                        const dot = document.createElement('span');
-                        dot.className = 'dot';
-                        cell.appendChild(dot);
-                    }
-                    if (isCurrentMonth) {
-                        cell.addEventListener('click', () => {
-                            hapticLight();
-                            selectedDate = dateStr;
-                            renderCalendar();
-                            renderLessons();
-                            updateCountBadge();
-                        });
-                    }
-                    $calendarGrid.appendChild(cell);
-                }
-            }
-
-            function goToPrevMonth() {
-                hapticLight();
-                if (calendarMonth === 0) { calendarMonth = 11; calendarYear--; } else calendarMonth--;
-                renderCalendar();
-            }
-
-            function goToNextMonth() {
-                hapticLight();
-                if (calendarMonth === 11) { calendarMonth = 0; calendarYear++; } else calendarMonth++;
-                renderCalendar();
-            }
-
-            function goToToday() {
-                hapticLight();
-                calendarYear = today.getFullYear();
-                calendarMonth = today.getMonth();
-                selectedDate = todayStr;
-                renderCalendar();
-                renderLessons();
-                updateCountBadge();
-            }
-
-            $btnPrevMonth.addEventListener('click', goToPrevMonth);
-            $btnNextMonth.addEventListener('click', goToNextMonth);
-            $calendarMonthTitle.addEventListener('click', goToToday);
-
-            // ── modal ──
-            function openModal() {
-                hapticLight();
-                $modalOverlay.classList.add('active');
-                $inputDate.value = selectedDate;
-                $inputStudent.value = '';
-                $inputSubject.value = '';
-                $inputTime.value = '';
-                $inputPrice.value = '';
-                setTimeout(() => $inputStudent.focus(), 300);
-            }
-
-            function closeModal() {
-                hapticLight();
-                $modalOverlay.classList.remove('active');
-                $inputDate.value = '';
-                $inputStudent.value = '';
-                $inputSubject.value = '';
-                $inputTime.value = '';
-                $inputPrice.value = '';
-            }
-
-            function saveNewLesson() {
-                const dateVal = $inputDate.value.trim();
-                const student = $inputStudent.value.trim();
-                const subject = $inputSubject.value.trim();
-                const time = $inputTime.value.trim();
-                const priceStr = $inputPrice.value.trim();
-                if (!dateVal) { showToast('⚠️ Вкажіть дату'); hapticWarning(); $inputDate.focus(); return; }
-                if (!student) { showToast('⚠️ Вкажіть ім\'я учня'); hapticWarning(); $inputStudent.focus(); return; }
-                if (!subject) { showToast('⚠️ Вкажіть предмет'); hapticWarning(); $inputSubject.focus(); return; }
-                if (!time || !time.includes('-')) { showToast('⚠️ Вкажіть час (напр. 18:00 - 19:00)'); hapticWarning(); $inputTime.focus(); return; }
-                const price = parseInt(priceStr);
-                if (isNaN(price) || price <= 0) { showToast('⚠️ Вкажіть коректну вартість'); hapticWarning(); $inputPrice.focus(); return; }
-
-                const newLesson = { id: nextId++, date: dateVal, time, student, subject, price, isPaid: false };
-                lessons.unshift(newLesson);
-                saveLessonsToStorage();
-                hapticSuccess();
-                showToast('✅ Заняття додано!');
-                closeModal();
-                const d = parseDate(dateVal);
-                calendarYear = d.getFullYear();
-                calendarMonth = d.getMonth();
-                selectedDate = dateVal;
-                renderCalendar();
-                renderLessons();
-                updateSummaries();
-            }
-
-            $btnAdd.addEventListener('click', openModal);
-            $btnCancel.addEventListener('click', closeModal);
-            $btnSave.addEventListener('click', saveNewLesson);
-            $modalOverlay.addEventListener('click', (e) => { if (e.target === $modalOverlay) closeModal(); });
-            document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && $modalOverlay.classList.contains('active')) closeModal(); });
-            $inputPrice.addEventListener('keydown', (e) => { if (e.key === 'Enter') saveNewLesson(); });
-
-            // Кнопка "Очистити все"
-            $btnClearAll.addEventListener('click', () => {
-                if (confirm('Ви впевнені, що хочете видалити ВСІ заняття?')) {
-                    lessons = [];
-                    nextId = 1;
-                    localStorage.removeItem(STORAGE_KEY);
-                    hapticWarning();
-                    showToast('🗑️ Усі заняття видалено');
-                    renderCalendar();
-                    renderLessons();
-                    updateSummaries();
-                }
-            });
-
-            function init() {
-                initTelegram();
-                loadLessonsFromStorage();   // завантажуємо збережені заняття
-                renderCalendar();
-                renderLessons();
-                updateSummaries();
-                console.log('🚀 natalyx TMA initialized');
-            }
-            init();
-        })();
-    </script>
+      // Initial load & simulated push
+      navigate('home');
+      setTimeout(() => {
+        const toast = document.createElement('div');
+        toast.style.position='absolute'; toast.style.top='70px'; toast.style.left='20px'; toast.style.right='20px';
+        toast.style.background='#f0b73e'; toast.style.color='#000'; toast.style.padding='12px';
+        toast.style.borderRadius='18px'; toast.style.fontWeight='bold';
+        toast.innerText='🔔 Новый эксклюзивный анализ!';
+        document.getElementById('app').appendChild(toast);
+        setTimeout(()=> toast.remove(), 3500);
+      }, 2500);
+    })();
+  </script>
 </body>
 </html>
