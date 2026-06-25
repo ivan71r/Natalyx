@@ -89,13 +89,8 @@
         }
 
         @keyframes orbFloat {
-            0%,
-            100% {
-                transform: translate(0, 0) scale(1);
-            }
-            50% {
-                transform: translate(25px, -30px) scale(1.1);
-            }
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(25px, -30px) scale(1.1); }
         }
 
         .header {
@@ -127,13 +122,8 @@
         }
 
         @keyframes logoFloat {
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-4px);
-            }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
         }
 
         .brand-text {
@@ -159,16 +149,9 @@
             scrollbar-color: rgba(255, 255, 255, 0.06) transparent;
         }
 
-        .main-content::-webkit-scrollbar {
-            width: 3px;
-        }
-        .main-content::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .main-content::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.06);
-            border-radius: 3px;
-        }
+        .main-content::-webkit-scrollbar { width: 3px; }
+        .main-content::-webkit-scrollbar-track { background: transparent; }
+        .main-content::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.06); border-radius: 3px; }
 
         .glass-card {
             background: rgba(18, 22, 30, 0.4);
@@ -186,45 +169,23 @@
         .glass-card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: 0; left: 0; right: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08) 50%, transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08) 50%, transparent);
         }
 
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .stagger-1 {
-            animation-delay: 0.05s;
-        }
-        .stagger-2 {
-            animation-delay: 0.1s;
-        }
-        .stagger-3 {
-            animation-delay: 0.15s;
-        }
-        .stagger-4 {
-            animation-delay: 0.2s;
-        }
-        .stagger-5 {
-            animation-delay: 0.25s;
-        }
-        .stagger-6 {
-            animation-delay: 0.3s;
-        }
-        .stagger-7 {
-            animation-delay: 0.35s;
-        }
+        .stagger-1 { animation-delay: 0.05s; }
+        .stagger-2 { animation-delay: 0.1s; }
+        .stagger-3 { animation-delay: 0.15s; }
+        .stagger-4 { animation-delay: 0.2s; }
+        .stagger-5 { animation-delay: 0.25s; }
+        .stagger-6 { animation-delay: 0.3s; }
+        .stagger-7 { animation-delay: 0.35s; }
 
         .section-header {
             display: flex;
@@ -241,7 +202,7 @@
             background: rgba(18, 22, 30, 0.4);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255,255,255,0.05);
             border-radius: var(--radius-lg);
             overflow: hidden;
             animation: fadeInUp 0.6s ease both;
@@ -251,15 +212,8 @@
             width: 100%;
         }
 
-        .video-preview:hover {
-            border-color: rgba(255, 0, 0, 0.5);
-            box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
-        }
-
-        .video-preview:active {
-            transform: scale(0.97);
-            transition: all 0.1s ease;
-        }
+        .video-preview:hover { border-color: rgba(255,0,0,0.5); box-shadow: 0 0 25px rgba(255,0,0,0.3); }
+        .video-preview:active { transform: scale(0.97); transition: all 0.1s ease; }
 
         .video-preview-thumb {
             width: 100%;
@@ -276,30 +230,27 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.25);
+            background: rgba(0,0,0,0.25);
         }
 
         .play-button-overlay {
             position: absolute;
-            top: 50%;
-            left: 50%;
+            top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 60px;
-            height: 60px;
-            background: rgba(255, 0, 0, 0.9);
+            width: 60px; height: 60px;
+            background: rgba(255,0,0,0.9);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.6);
+            box-shadow: 0 0 30px rgba(255,0,0,0.6);
             transition: all 0.3s ease;
             z-index: 2;
         }
 
         .play-button-overlay::after {
             content: '';
-            width: 0;
-            height: 0;
+            width: 0; height: 0;
             border-left: 20px solid white;
             border-top: 12px solid transparent;
             border-bottom: 12px solid transparent;
@@ -307,31 +258,19 @@
         }
 
         .video-preview:hover .play-button-overlay {
-            transform: translate(-50%, -50%) scale(1.1);
-            box-shadow: 0 0 50px rgba(255, 0, 0, 0.9);
+            transform: translate(-50%,-50%) scale(1.1);
+            box-shadow: 0 0 50px rgba(255,0,0,0.9);
         }
 
-        .video-preview-info {
-            padding: 14px;
-        }
-
-        .video-preview-title {
-            color: var(--text-primary);
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin-bottom: 4px;
-        }
-
-        .video-preview-channel {
-            color: var(--text-secondary);
-            font-size: 0.75rem;
-        }
+        .video-preview-info { padding: 14px; }
+        .video-preview-title { color: var(--text-primary); font-weight: 600; font-size: 0.9rem; margin-bottom: 4px; }
+        .video-preview-channel { color: var(--text-secondary); font-size: 0.75rem; }
 
         .welcome-banner {
-            background: rgba(18, 22, 30, 0.4);
+            background: rgba(18,22,30,0.4);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255,255,255,0.05);
             border-radius: var(--radius-lg);
             padding: 18px;
             animation: fadeInUp 0.6s ease both;
@@ -342,22 +281,14 @@
         .welcome-banner::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: 0; left: 0; right: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08) 50%, transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08) 50%, transparent);
         }
 
-        .accent {
-            color: var(--accent);
-        }
-        .text-muted {
-            color: var(--text-muted);
-        }
-        .text-secondary {
-            color: var(--text-secondary);
-        }
+        .accent { color: var(--accent); }
+        .text-muted { color: var(--text-muted); }
+        .text-secondary { color: var(--text-secondary); }
 
         .grid-nav {
             display: flex;
@@ -371,10 +302,10 @@
 
         .nav-card {
             background: linear-gradient(180deg, 
-                rgba(35, 30, 22, 0.5) 0%, 
-                rgba(22, 18, 10, 0.55) 30%,
-                rgba(30, 24, 13, 0.5) 60%,
-                rgba(18, 14, 7, 0.6) 100%);
+                rgba(35,30,22,0.5) 0%, 
+                rgba(22,18,10,0.55) 30%,
+                rgba(30,24,13,0.5) 60%,
+                rgba(18,14,7,0.6) 100%);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border-radius: 35px;
@@ -392,77 +323,46 @@
             width: 100%;
             max-width: 240px;
             position: relative;
-            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.35s ease;
             animation: fadeInUp 0.6s ease both;
-            border: 1px solid rgba(201, 160, 80, 0.3);
-            box-shadow: 
-                0 0 10px rgba(201, 160, 80, 0.15),
-                inset 0 1px 0 rgba(255, 255, 255, 0.06),
-                inset 0 -2px 3px rgba(0, 0, 0, 0.3),
-                0 3px 8px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(201,160,80,0.3);
+            box-shadow: 0 0 10px rgba(201,160,80,0.15), inset 0 1px 0 rgba(255,255,255,0.06), 0 3px 8px rgba(0,0,0,0.4);
             overflow: hidden;
         }
 
         .nav-card::before {
             content: '';
             position: absolute;
-            top: 2px;
-            left: 12px;
-            right: 12px;
+            top: 2px; left: 12px; right: 12px;
             height: 30%;
-            background: linear-gradient(180deg, 
-                rgba(255, 255, 255, 0.12) 0%, 
-                rgba(255, 255, 255, 0.04) 40%,
-                rgba(255, 255, 255, 0) 100%);
+            background: linear-gradient(180deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.04) 40%, rgba(255,255,255,0) 100%);
             border-radius: 35px 35px 50% 50%;
             pointer-events: none;
-            transition: all 0.3s ease;
         }
 
         .nav-card::after {
             content: '';
             position: absolute;
-            bottom: 2px;
-            left: 12px;
-            right: 12px;
+            bottom: 2px; left: 12px; right: 12px;
             height: 15%;
-            background: linear-gradient(0deg, 
-                rgba(255, 200, 130, 0.06) 0%, 
-                rgba(255, 200, 130, 0) 100%);
+            background: linear-gradient(0deg, rgba(255,200,130,0.06) 0%, rgba(255,200,130,0) 100%);
             border-radius: 50%;
             pointer-events: none;
         }
 
         .nav-card span {
             font-size: 1.2rem;
-            filter: drop-shadow(0 0 5px rgba(201, 160, 80, 0.3));
-            transition: transform 0.3s ease;
+            filter: drop-shadow(0 0 5px rgba(201,160,80,0.3));
         }
 
-        .nav-card:hover {
-            transform: translateY(-2px);
-            border-color: rgba(201, 160, 80, 0.5);
-            box-shadow: 
-                0 0 20px rgba(201, 160, 80, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1),
-                0 6px 16px rgba(0, 0, 0, 0.5);
-        }
+        .nav-card:hover { transform: translateY(-2px); border-color: rgba(201,160,80,0.5); }
+        .nav-card:active { transform: scale(0.95); border-color: rgba(201,160,80,0.7); }
 
-        .nav-card:active {
-            transform: scale(0.95);
-            border-color: rgba(201, 160, 80, 0.7);
-            box-shadow: 
-                0 0 25px rgba(201, 160, 80, 0.6),
-                inset 0 2px 5px rgba(0, 0, 0, 0.4);
-            transition: all 0.08s ease;
-        }
-
-        /* Кнопка Назад */
         .btn-back {
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255,255,255,0.04);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255,255,255,0.08);
             border-radius: 30px;
             padding: 10px 18px;
             color: var(--text-secondary);
@@ -477,62 +377,49 @@
             align-self: flex-start;
         }
 
-        .btn-back:hover {
-            background: rgba(255, 255, 255, 0.08);
-            color: var(--text-primary);
-            border-color: rgba(255, 255, 255, 0.15);
-        }
+        .btn-back:hover { background: rgba(255,255,255,0.08); color: var(--text-primary); }
+        .btn-back:active { transform: scale(0.95); background: rgba(201,160,80,0.15); border-color: rgba(201,160,80,0.4); }
 
-        .btn-back:active {
-            transform: scale(0.95);
-            background: rgba(201, 160, 80, 0.15);
-            border-color: rgba(201, 160, 80, 0.4);
-        }
-
-        .video-item,
-        .news-item,
-        .post-item {
-            background: rgba(18, 22, 30, 0.4);
+        .news-item {
+            background: rgba(18,22,30,0.4);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-radius: var(--radius-lg);
             padding: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255,255,255,0.05);
             margin-bottom: 10px;
             animation: fadeInUp 0.6s ease both;
-            position: relative;
-            overflow: hidden;
             width: 100%;
             cursor: pointer;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        .video-item:hover,
-        .news-item:hover,
-        .post-item:hover {
-            border-color: rgba(201, 160, 80, 0.4);
-            box-shadow: 0 0 20px rgba(201, 160, 80, 0.2);
-        }
-
-        .video-item::before,
-        .news-item::before,
-        .post-item::before {
+        .news-item::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: 0; left: 0; right: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06) 50%, transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06) 50%, transparent);
+        }
+
+        .news-item:hover { border-color: rgba(201,160,80,0.4); box-shadow: 0 0 20px rgba(201,160,80,0.2); }
+
+        .exchange-logo-img {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            object-fit: contain;
+            flex-shrink: 0;
+            padding: 2px;
         }
 
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
             font-weight: 600;
-            letter-spacing: 0.01em;
             cursor: pointer;
             border: none;
             outline: none;
@@ -544,102 +431,58 @@
             transition: all 0.25s ease;
         }
 
+        .btn-neon {
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            background: rgba(201,160,80,0.1);
+            color: #d4a840;
+            border: 1px solid rgba(201,160,80,0.35);
+            box-shadow: 0 0 10px rgba(201,160,80,0.15);
+            flex-shrink: 0;
+        }
+
+        .btn-neon:active { background: rgba(201,160,80,0.2); border-color: #d4a840; transform: scale(0.94); }
+
         .btn-glow {
             padding: 13px 28px;
             border-radius: 50px;
             font-size: 0.85rem;
             background: radial-gradient(circle at 30% 30%, #d4a840, #8b6914);
             color: #0a0c10;
-            box-shadow: 0 0 25px rgba(201, 160, 80, 0.5), 0 0 60px rgba(201, 160, 80, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 25px rgba(201,160,80,0.5), 0 0 60px rgba(201,160,80,0.2), inset 0 1px 0 rgba(255,255,255,0.2);
         }
 
-        .btn-glow:active {
-            transform: scale(0.93);
-            box-shadow: 0 0 35px rgba(201, 160, 80, 0.7), 0 0 80px rgba(201, 160, 80, 0.3);
-        }
-
-        .btn-neon {
-            padding: 10px 20px;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            background: rgba(201, 160, 80, 0.08);
-            color: #d4a840;
-            border: 1.5px solid rgba(201, 160, 80, 0.4);
-            box-shadow: 0 0 12px rgba(201, 160, 80, 0.2);
-            text-shadow: 0 0 10px rgba(201, 160, 80, 0.4);
-        }
-
-        .btn-neon:active {
-            background: rgba(201, 160, 80, 0.2);
-            border-color: #d4a840;
-            box-shadow: 0 0 30px rgba(201, 160, 80, 0.5);
-            transform: scale(0.94);
-        }
-
-        .btn-glass-depth {
-            padding: 11px 24px;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
-            color: #c0ccdc;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
-        .btn-glass-depth:active {
-            background: rgba(255, 255, 255, 0.12);
-            border-color: rgba(255, 255, 255, 0.2);
-            transform: scale(0.94);
-        }
+        .btn-glow:active { transform: scale(0.93); box-shadow: 0 0 35px rgba(201,160,80,0.7); }
 
         .btn-wave {
             padding: 12px 30px;
             border-radius: 50px;
             font-size: 0.85rem;
-            background: linear-gradient(180deg, rgba(26, 36, 50, 0.7) 0%, rgba(13, 20, 32, 0.7) 100%);
+            background: linear-gradient(180deg, rgba(26,36,50,0.7) 0%, rgba(13,20,32,0.7) 100%);
             color: #e0e8f0;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.4);
         }
 
-        .btn-wave:active {
-            border-color: rgba(201, 160, 80, 0.4);
-            box-shadow: 0 0 25px rgba(201, 160, 80, 0.3);
-            transform: scale(0.94);
-        }
+        .btn-wave:active { border-color: rgba(201,160,80,0.4); transform: scale(0.94); }
 
-        .btn-sm {
-            padding: 8px 16px;
-            font-size: 0.7rem;
-            border-radius: 40px;
-        }
-
-        .btn-full {
-            width: 100%;
-            justify-content: center;
-        }
+        .btn-sm { padding: 8px 16px; font-size: 0.7rem; border-radius: 40px; }
+        .btn-full { width: 100%; justify-content: center; }
 
         .btn .ripple {
             position: absolute;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255,255,255,0.3);
             transform: scale(0);
             animation: rippleEffect 0.6s ease-out forwards;
             pointer-events: none;
         }
 
-        @keyframes rippleEffect {
-            to {
-                transform: scale(5);
-                opacity: 0;
-            }
-        }
+        @keyframes rippleEffect { to { transform: scale(5); opacity: 0; } }
 
         .poll-bar {
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255,255,255,0.06);
             height: 5px;
             border-radius: 5px;
             margin: 7px 0;
@@ -650,7 +493,7 @@
             height: 5px;
             background: linear-gradient(90deg, #c9a050, #d4b860);
             border-radius: 5px;
-            box-shadow: 0 0 10px rgba(201, 160, 80, 0.5);
+            box-shadow: 0 0 10px rgba(201,160,80,0.5);
         }
 
         .badge-notif {
@@ -658,21 +501,12 @@
             border-radius: 10px;
             padding: 2px 7px;
             font-size: 0.65rem;
-            margin-left: 6px;
             color: white;
             font-weight: 600;
             animation: badgePulse 2s infinite;
         }
 
-        @keyframes badgePulse {
-            0%,
-            100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.5;
-            }
-        }
+        @keyframes badgePulse { 0%,100%{opacity:1;} 50%{opacity:0.5;} }
 
         .loading-screen {
             position: absolute;
@@ -686,26 +520,18 @@
             transition: opacity 0.5s ease, visibility 0.5s ease;
         }
 
-        .loading-screen.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
+        .loading-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 
         .loader-ring {
-            width: 36px;
-            height: 36px;
+            width: 36px; height: 36px;
             border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.06);
+            border: 2px solid rgba(255,255,255,0.06);
             border-top-color: var(--accent);
             animation: spin 0.8s linear infinite;
             box-shadow: 0 0 20px var(--accent-glow);
         }
 
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
@@ -715,39 +541,29 @@
             <div class="bg-orb"></div>
             <div class="bg-orb"></div>
         </div>
-
         <div class="loading-screen" id="loadingScreen">
             <div class="loader-ring"></div>
         </div>
-
         <div class="header">
             <div class="logo-area">
                 <div class="logo-icon"></div>
                 <span class="brand-text">Дневник Активов</span>
             </div>
         </div>
-
         <div class="main-content" id="mainContent"></div>
     </div>
 
     <script>
         (function() {
             const tg = window.Telegram?.WebApp;
-            if (tg) {
-                tg.ready();
-                tg.expand();
-                tg.setHeaderColor('secondary_bg_color');
-                tg.setBackgroundColor('#06080c');
-            }
+            if (tg) { tg.ready(); tg.expand(); tg.setHeaderColor('secondary_bg_color'); tg.setBackgroundColor('#06080c'); }
 
             const YOUTUBE_URL = 'https://www.youtube.com/@DnevnikAktivov';
             const NEWS_URL = 'https://t.me/dnevnikaktivovnews';
             const POSTS_URL = 'https://t.me/dnevnikaktivov';
 
             const loadingScreen = document.getElementById('loadingScreen');
-            window.addEventListener('load', () => {
-                setTimeout(() => loadingScreen.classList.add('hidden'), 500);
-            });
+            window.addEventListener('load', () => { setTimeout(() => loadingScreen.classList.add('hidden'), 500); });
 
             document.addEventListener('click', function(e) {
                 const btn = e.target.closest('.btn');
@@ -782,8 +598,7 @@
             <div class="nav-card stagger-2" data-nav="education"><span>📚</span>Обучение</div>
             <div class="nav-card stagger-2" data-nav="links"><span>🔗</span>Биржи</div>
             <div class="nav-card stagger-3" data-nav="portfolio"><span>💼</span>Портфель</div>
-          </div>
-        `;
+          </div>`;
             }
 
             function renderEducation() {
@@ -804,50 +619,76 @@
             <div style="color:var(--text-primary); font-weight:600;">🎓 Академия — полный путь инвестора</div>
             <div style="color:var(--text-secondary); font-size:0.75rem;">Полный курс по инвестированию</div>
             <button class="btn btn-neon btn-sm" style="margin-top:8px;" onclick="event.stopPropagation(); window.open('https://t.me/dnevnikaktivov/10899', '_blank');">Открыть</button>
-          </div>
-        `;
+          </div>`;
             }
 
             function renderLinks() {
                 return `
           <button class="btn-back" onclick="navigate('home');">← Назад</button>
           <div class="section-header">🔥 Биржи</div>
-          <div class="news-item stagger-1" onclick="window.open('https://www.binance.com/join?ref=3074', '_blank');">
-            <div style="color:var(--text-primary); font-weight:600;">🟡 Биржа Binance</div>
-            <div style="color:var(--text-secondary); font-size:0.7rem;">до $300 приветственный бонус</div>
-            <button class="btn btn-neon btn-sm" style="margin-top:6px;" onclick="event.stopPropagation(); window.open('https://www.binance.com/join?ref=3074', '_blank');">Открыть</button>
+          <div class="news-item stagger-1" onclick="window.open('https://www.binance.com/join?ref=3074', '_blank');" style="display:flex; align-items:center; gap:12px;">
+            <img src="binance.png" class="exchange-logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" alt="Binance">
+            <div style="width:44px;height:44px;border-radius:12px;background:#f3ba2f;color:#000;display:none;align-items:center;justify-content:center;font-weight:700;font-size:1rem;flex-shrink:0;">B</div>
+            <div style="flex:1;min-width:0;">
+              <div style="color:var(--text-primary);font-weight:600;font-size:0.85rem;">Binance</div>
+              <div style="color:var(--text-secondary);font-size:0.7rem;">до $300 приветственный бонус</div>
+            </div>
+            <button class="btn btn-neon" onclick="event.stopPropagation();window.open('https://www.binance.com/join?ref=3074','_blank');">Открыть</button>
           </div>
-          <div class="news-item stagger-2" onclick="window.open('https://partner.bybit.com/b/dnevnikaktiv', '_blank');">
-            <div style="color:var(--text-primary); font-weight:600;">🔵 Биржа ByBit</div>
-            <div style="color:var(--text-secondary); font-size:0.7rem;">скидка + до $4000 бонуса</div>
-            <button class="btn btn-neon btn-sm" style="margin-top:6px;" onclick="event.stopPropagation(); window.open('https://partner.bybit.com/b/dnevnikaktiv', '_blank');">Открыть</button>
+          <div class="news-item stagger-2" onclick="window.open('https://partner.bybit.com/b/dnevnikaktiv', '_blank');" style="display:flex; align-items:center; gap:12px;">
+            <img src="bybit.png" class="exchange-logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" alt="ByBit">
+            <div style="width:44px;height:44px;border-radius:12px;background:#1a1a2e;color:#00a3ff;display:none;align-items:center;justify-content:center;font-weight:700;font-size:1rem;flex-shrink:0;">B</div>
+            <div style="flex:1;min-width:0;">
+              <div style="color:var(--text-primary);font-weight:600;font-size:0.85rem;">ByBit</div>
+              <div style="color:var(--text-secondary);font-size:0.7rem;">скидка + до $4000 бонуса</div>
+            </div>
+            <button class="btn btn-neon" onclick="event.stopPropagation();window.open('https://partner.bybit.com/b/dnevnikaktiv','_blank');">Открыть</button>
           </div>
-          <div class="news-item stagger-3" onclick="window.open('https://www.mexc.com/register?inviteCode=1VqKK', '_blank');">
-            <div style="color:var(--text-primary); font-weight:600;">🟢 Биржа Mexc</div>
-            <div style="color:var(--text-secondary); font-size:0.7rem;">код 1VqKK • бонус до $1,000 USDT</div>
-            <button class="btn btn-neon btn-sm" style="margin-top:6px;" onclick="event.stopPropagation(); window.open('https://www.mexc.com/register?inviteCode=1VqKK', '_blank');">Открыть</button>
+          <div class="news-item stagger-3" onclick="window.open('https://www.mexc.com/register?inviteCode=1VqKK', '_blank');" style="display:flex; align-items:center; gap:12px;">
+            <img src="mexc.png" class="exchange-logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" alt="Mexc">
+            <div style="width:44px;height:44px;border-radius:12px;background:#1a1a2e;color:#00e0c0;display:none;align-items:center;justify-content:center;font-weight:700;font-size:1rem;flex-shrink:0;">M</div>
+            <div style="flex:1;min-width:0;">
+              <div style="color:var(--text-primary);font-weight:600;font-size:0.85rem;">Mexc</div>
+              <div style="color:var(--text-secondary);font-size:0.7rem;">код 1VqKK • бонус до $1,000 USDT</div>
+            </div>
+            <button class="btn btn-neon" onclick="event.stopPropagation();window.open('https://www.mexc.com/register?inviteCode=1VqKK','_blank');">Открыть</button>
           </div>
-          <div class="news-item stagger-4" onclick="window.open('https://bingx.com/invite/46HZUC', '_blank');">
-            <div style="color:var(--text-primary); font-weight:600;">🟠 Биржа Bingx</div>
-            <div style="color:var(--text-secondary); font-size:0.7rem;">код 46HZUC • бонус до $5,000 USDT</div>
-            <button class="btn btn-neon btn-sm" style="margin-top:6px;" onclick="event.stopPropagation(); window.open('https://bingx.com/invite/46HZUC', '_blank');">Открыть</button>
+          <div class="news-item stagger-4" onclick="window.open('https://bingx.com/invite/46HZUC', '_blank');" style="display:flex; align-items:center; gap:12px;">
+            <img src="bingx.png" class="exchange-logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" alt="Bingx">
+            <div style="width:44px;height:44px;border-radius:12px;background:#1a1a2e;color:#f0a030;display:none;align-items:center;justify-content:center;font-weight:700;font-size:1rem;flex-shrink:0;">B</div>
+            <div style="flex:1;min-width:0;">
+              <div style="color:var(--text-primary);font-weight:600;font-size:0.85rem;">Bingx</div>
+              <div style="color:var(--text-secondary);font-size:0.7rem;">код 46HZUC • бонус до $5,000 USDT</div>
+            </div>
+            <button class="btn btn-neon" onclick="event.stopPropagation();window.open('https://bingx.com/invite/46HZUC','_blank');">Открыть</button>
           </div>
-          <div class="news-item stagger-5" onclick="window.open('https://partner.bitget.com/bg/UDX26A', '_blank');">
-            <div style="color:var(--text-primary); font-weight:600;">🔴 Биржа BITGET</div>
-            <div style="color:var(--text-secondary); font-size:0.7rem;">бонус до $30,000 USDT</div>
-            <button class="btn btn-neon btn-sm" style="margin-top:6px;" onclick="event.stopPropagation(); window.open('https://partner.bitget.com/bg/UDX26A', '_blank');">Открыть</button>
+          <div class="news-item stagger-5" onclick="window.open('https://partner.bitget.com/bg/UDX26A', '_blank');" style="display:flex; align-items:center; gap:12px;">
+            <img src="bitget.png" class="exchange-logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" alt="BITGET">
+            <div style="width:44px;height:44px;border-radius:12px;background:#1a1a2e;color:#00b4d8;display:none;align-items:center;justify-content:center;font-weight:700;font-size:1rem;flex-shrink:0;">B</div>
+            <div style="flex:1;min-width:0;">
+              <div style="color:var(--text-primary);font-weight:600;font-size:0.85rem;">BITGET</div>
+              <div style="color:var(--text-secondary);font-size:0.7rem;">бонус до $30,000 USDT</div>
+            </div>
+            <button class="btn btn-neon" onclick="event.stopPropagation();window.open('https://partner.bitget.com/bg/UDX26A','_blank');">Открыть</button>
           </div>
-          <div class="news-item stagger-6" onclick="window.open('https://www.okx.com/join/36759163', '_blank');">
-            <div style="color:var(--text-primary); font-weight:600;">⚪ Биржа OKX</div>
-            <div style="color:var(--text-secondary); font-size:0.7rem;">код 36759163 • бонус до $64 000 + Mystery Box</div>
-            <button class="btn btn-neon btn-sm" style="margin-top:6px;" onclick="event.stopPropagation(); window.open('https://www.okx.com/join/36759163', '_blank');">Открыть</button>
+          <div class="news-item stagger-6" onclick="window.open('https://www.okx.com/join/36759163', '_blank');" style="display:flex; align-items:center; gap:12px;">
+            <img src="okx.png" class="exchange-logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" alt="OKX">
+            <div style="width:44px;height:44px;border-radius:12px;background:#1a1a2e;color:#fff;display:none;align-items:center;justify-content:center;font-weight:700;font-size:1rem;flex-shrink:0;">O</div>
+            <div style="flex:1;min-width:0;">
+              <div style="color:var(--text-primary);font-weight:600;font-size:0.85rem;">OKX</div>
+              <div style="color:var(--text-secondary);font-size:0.7rem;">код 36759163 • бонус до $64 000</div>
+            </div>
+            <button class="btn btn-neon" onclick="event.stopPropagation();window.open('https://www.okx.com/join/36759163','_blank');">Открыть</button>
           </div>
-          <div class="news-item stagger-7" onclick="window.open('https://go.gate.io/w/GMgPSct6', '_blank');">
-            <div style="color:var(--text-primary); font-weight:600;">🟣 Биржа Gate</div>
-            <div style="color:var(--text-secondary); font-size:0.7rem;">код 15688798 • бонус $50 USDT</div>
-            <button class="btn btn-neon btn-sm" style="margin-top:6px;" onclick="event.stopPropagation(); window.open('https://go.gate.io/w/GMgPSct6', '_blank');">Открыть</button>
-          </div>
-        `;
+          <div class="news-item stagger-7" onclick="window.open('https://go.gate.io/w/GMgPSct6', '_blank');" style="display:flex; align-items:center; gap:12px;">
+            <img src="gate.png" class="exchange-logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" alt="Gate">
+            <div style="width:44px;height:44px;border-radius:12px;background:#1a1a2e;color:#17e8a0;display:none;align-items:center;justify-content:center;font-weight:700;font-size:1rem;flex-shrink:0;">G</div>
+            <div style="flex:1;min-width:0;">
+              <div style="color:var(--text-primary);font-weight:600;font-size:0.85rem;">Gate</div>
+              <div style="color:var(--text-secondary);font-size:0.7rem;">код 15688798 • бонус $50 USDT</div>
+            </div>
+            <button class="btn btn-neon" onclick="event.stopPropagation();window.open('https://go.gate.io/w/GMgPSct6','_blank');">Открыть</button>
+          </div>`;
             }
 
             function renderPortfolio() {
@@ -859,8 +700,7 @@
             <div class="poll-bar" style="margin:10px 0;"><div class="poll-fill" style="width:72%;"></div></div>
             <div style="color:var(--text-secondary);">+24.8% за всё время</div>
             <button class="btn btn-wave btn-full" style="margin-top:10px;">📊 Подробная статистика</button>
-          </div>
-        `;
+          </div>`;
             }
 
             function renderProfile() {
@@ -871,13 +711,11 @@
             <div style="color:var(--text-primary); font-weight:700;">Профиль</div>
             <div style="color:var(--text-secondary);">Сохранено: ${state.bookmarks.size}</div>
             <button class="btn btn-glow btn-full" style="margin-top:12px;">⚙ Настройки</button>
-          </div>
-        `;
+          </div>`;
             }
 
             const renderers = {
-                home: renderHome,
-                education: renderEducation,
+                home: renderHome, education: renderEducation,
                 links: renderLinks, portfolio: renderPortfolio, profile: renderProfile
             };
 
@@ -892,10 +730,7 @@
             document.getElementById('mainContent').addEventListener('click', (e) => {
                 const navCard = e.target.closest('.nav-card');
                 if (navCard?.dataset.nav) navigate(navCard.dataset.nav);
-                if (e.target.closest('.btn-back')) {
-                    navigate('home');
-                }
-                if (e.target.closest('.btn') && !e.target.closest('.btn-back') && tg) tg.showAlert('✅ Готово!');
+                if (e.target.closest('.btn-back')) navigate('home');
             });
 
             navigate('home');
