@@ -276,7 +276,7 @@
             padding: 0;
         }
 
-        /* ============ LUXURY PILL BUTTONS — МЕНШІ, БЕЗ ЖОВТОГО КВАДРАТА ============ */
+        /* ============ LUXURY PILL BUTTONS ============ */
         .nav-card {
             background: linear-gradient(180deg, 
                 rgba(35, 30, 22, 0.5) 0%, 
@@ -311,7 +311,6 @@
             overflow: hidden;
         }
 
-        /* Глянцевий відблиск зверху */
         .nav-card::before {
             content: '';
             position: absolute;
@@ -328,7 +327,6 @@
             transition: all 0.3s ease;
         }
 
-        /* Нижній рефлекс */
         .nav-card::after {
             content: '';
             position: absolute;
@@ -439,6 +437,21 @@
             -webkit-tap-highlight-color: transparent;
             user-select: none;
             transition: all 0.25s ease;
+        }
+
+        .btn-youtube {
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            background: linear-gradient(135deg, #ff0000, #cc0000);
+            color: white;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.4), 0 0 40px rgba(255, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-youtube:active {
+            transform: scale(0.93);
+            box-shadow: 0 0 35px rgba(255, 0, 0, 0.7), 0 0 60px rgba(255, 0, 0, 0.3);
         }
 
         .btn-glow {
@@ -695,6 +708,8 @@
                 tg.setBackgroundColor('#06080c');
             }
 
+            const YOUTUBE_URL = 'https://www.youtube.com/@DnevnikAktivov';
+
             const loadingScreen = document.getElementById('loadingScreen');
             window.addEventListener('load', () => {
                 setTimeout(() => loadingScreen.classList.add('hidden'), 500);
@@ -740,10 +755,10 @@
                 return `
           <div class="welcome-banner">
             <div class="creator-name">Дневник <span class="accent">активов</span></div>
-            <div style="color:var(--text-muted); font-size:0.75rem; margin-top:4px;">Финансовый блог и обучение</div>
-            <button class="btn btn-glow btn-sm" style="margin-top:12px;">🔥 Смотреть последнее</button>
+            <button class="btn btn-youtube btn-full" style="margin-top:12px;" onclick="event.stopPropagation(); window.open('${YOUTUBE_URL}', '_blank');">
+              ▶ YouTube канал
+            </button>
           </div>
-          <div class="section-header">⚡ Быстрый доступ</div>
           <div class="grid-nav">
             <div class="nav-card stagger-1" data-nav="videos"><span>🎬</span>Видео</div>
             <div class="nav-card stagger-1" data-nav="news"><span>📰</span>Новости</div>
@@ -753,12 +768,6 @@
             <div class="nav-card stagger-3" data-nav="links"><span>🔗</span>Ссылки</div>
             <div class="nav-card stagger-4" data-nav="portfolio"><span>💼</span>Портфель</div>
             <div class="nav-card stagger-4" data-nav="faq"><span>❓</span>FAQ</div>
-          </div>
-          <div class="section-header">📢 Объявления <span class="badge-notif">2</span></div>
-          <div class="news-item stagger-3">
-            <strong style="color:var(--text-primary);">Новый урок по трейдингу</strong>
-            <p style="color:var(--text-muted); font-size:0.75rem;">Разбор стратегии управления рисками.</p>
-            <button class="btn btn-wave btn-full" style="margin-top:10px;">Смотреть урок</button>
           </div>
         `;
             }
@@ -771,7 +780,7 @@
               <div class="video-thumb">${v.thumb}</div>
               <strong style="color:var(--text-primary);">${v.title}</strong>
               <div style="color:var(--text-secondary); font-size:0.75rem;">${v.desc}</div>
-              <button class="btn btn-neon btn-full" style="margin-top:8px;">▶ Смотреть</button>
+              <button class="btn btn-neon btn-full" style="margin-top:8px;" onclick="window.open('${YOUTUBE_URL}', '_blank');">▶ Смотреть</button>
             </div>
           `).join('')}
         `;
@@ -848,7 +857,7 @@
                 return `
           <div class="section-header">🔗 Полезные ссылки</div>
           ${['📺 YouTube канал','💱 Рекомендованные биржи','📊 Трекер портфеля','🤝 Партнёрские ресурсы'].map((l, i) => `
-            <div class="news-item stagger-${i+1}" style="display:flex; justify-content:space-between; align-items:center;">${l} <button class="btn btn-glass-depth btn-sm">Открыть</button></div>
+            <div class="news-item stagger-${i+1}" style="display:flex; justify-content:space-between; align-items:center;">${l} <button class="btn btn-glass-depth btn-sm" onclick="${l.includes('YouTube') ? `window.open('${YOUTUBE_URL}', '_blank')` : ''}">Открыть</button></div>
           `).join('')}
         `;
             }
@@ -907,28 +916,10 @@
             document.getElementById('mainContent').addEventListener('click', (e) => {
                 const navCard = e.target.closest('.nav-card');
                 if (navCard?.dataset.nav) navigate(navCard.dataset.nav);
-                if (e.target.closest('.btn') && tg) tg.showAlert('✅ Готово!');
+                if (e.target.closest('.btn') && !e.target.closest('.btn-youtube') && tg) tg.showAlert('✅ Готово!');
             });
 
             navigate('home');
-
-            setTimeout(() => {
-                const toast = document.createElement('div');
-                toast.style.cssText = `
-            position:absolute; top:70px; left:16px; right:16px; z-index:10;
-            background:linear-gradient(135deg, #c9a050, #a07828); color:#000;
-            padding:12px 16px; border-radius:18px; font-weight:700; font-size:0.85rem;
-            box-shadow:0 10px 30px rgba(201,160,80,0.5);
-            animation: fadeInUp 0.5s ease;
-          `;
-                toast.innerText = '🔔 Новый эксклюзивный анализ!';
-                document.getElementById('app').appendChild(toast);
-                setTimeout(() => {
-                    toast.style.opacity = '0';
-                    toast.style.transition = 'opacity 0.4s ease';
-                    setTimeout(() => toast.remove(), 400);
-                }, 3000);
-            }, 2000);
         })();
     </script>
 </body>
