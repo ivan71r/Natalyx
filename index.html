@@ -19,6 +19,8 @@
             --radius-lg: 22px;
             --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.4), 0 8px 32px rgba(0, 0, 0, 0.3);
             --font-primary: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            --danger: #e63946;
+            --success: #2ecc71;
         }
 
         * {
@@ -97,12 +99,12 @@
             padding: 16px 18px 4px;
             display: flex;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: space-between;
             position: relative;
             z-index: 2;
         }
 
-        .logo-area {
+        .header-left {
             display: flex;
             align-items: center;
             gap: 10px;
@@ -136,6 +138,46 @@
             background-clip: text;
         }
 
+        /* Шестерня з анімацією обертання */
+        .admin-gear-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-muted);
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            z-index: 3;
+        }
+
+        .admin-gear-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-secondary);
+        }
+
+        .admin-gear-btn:active {
+            transform: rotate(180deg) scale(0.9);
+            transition: all 0.2s ease;
+        }
+
+        .admin-gear-btn.active {
+            background: rgba(201, 160, 80, 0.2);
+            border-color: rgba(201, 160, 80, 0.4);
+            color: var(--accent);
+            animation: gearSpin 0.6s ease;
+        }
+
+        @keyframes gearSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(180deg); }
+        }
+
         .main-content {
             flex: 1;
             overflow-y: auto;
@@ -152,6 +194,238 @@
         .main-content::-webkit-scrollbar { width: 3px; }
         .main-content::-webkit-scrollbar-track { background: transparent; }
         .main-content::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.06); border-radius: 3px; }
+
+        /* Смужка адміністратора */
+        .admin-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(18, 22, 30, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(201, 160, 80, 0.2);
+            border-radius: 14px;
+            padding: 10px 14px;
+            margin-bottom: 2px;
+            font-size: 0.75rem;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .admin-bar-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-admin {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+            font-family: var(--font-primary);
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-admin:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-admin.primary {
+            background: rgba(201, 160, 80, 0.2);
+            border-color: rgba(201, 160, 80, 0.4);
+            color: var(--accent);
+        }
+
+        .btn-admin.primary:hover {
+            background: rgba(201, 160, 80, 0.3);
+        }
+
+        .btn-admin.danger {
+            background: rgba(230, 57, 70, 0.1);
+            border-color: rgba(230, 57, 70, 0.3);
+            color: #ff6b6b;
+        }
+
+        .btn-admin.danger:hover {
+            background: rgba(230, 57, 70, 0.2);
+        }
+
+        /* Кнопки-іконки для редагування (олівець і кошик) */
+        .edit-icon-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .edit-icon-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+        }
+
+        .edit-icon-btn.edit:hover {
+            background: rgba(201, 160, 80, 0.2);
+            border-color: rgba(201, 160, 80, 0.4);
+            color: var(--accent);
+        }
+
+        .edit-icon-btn.delete:hover {
+            background: rgba(230, 57, 70, 0.2);
+            border-color: rgba(230, 57, 70, 0.4);
+            color: #ff6b6b;
+        }
+
+        /* Модальне вікно */
+        .edit-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .edit-modal {
+            background: rgba(20, 24, 34, 0.98);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 24px;
+            width: 90%;
+            max-width: 360px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            animation: modalIn 0.3s ease;
+        }
+
+        @keyframes modalIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .edit-modal h3 {
+            color: var(--text-primary);
+            font-size: 1rem;
+            margin-bottom: 18px;
+            font-weight: 600;
+        }
+
+        .edit-modal .field {
+            margin-bottom: 14px;
+        }
+
+        .edit-modal .field label {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 0.72rem;
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+
+        .edit-modal .field input {
+            width: 100%;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            outline: none;
+            font-family: var(--font-primary);
+            transition: border-color 0.2s;
+        }
+
+        .edit-modal .field input:focus {
+            border-color: var(--accent);
+        }
+
+        /* Поле для завантаження зображення */
+        .image-upload-area {
+            border: 2px dashed rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .image-upload-area:hover {
+            border-color: rgba(201, 160, 80, 0.5);
+            background: rgba(201, 160, 80, 0.05);
+        }
+
+        .image-upload-area img {
+            max-width: 80px;
+            max-height: 80px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+        }
+
+        .image-upload-area span {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+        }
+
+        .edit-modal .actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        .btn-modal {
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            font-family: var(--font-primary);
+            transition: all 0.2s ease;
+        }
+
+        .btn-modal.save {
+            background: var(--accent);
+            color: #000;
+        }
+
+        .btn-modal.save:hover {
+            opacity: 0.9;
+        }
+
+        .btn-modal.cancel {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
         .glass-card {
             background: rgba(18, 22, 30, 0.4);
@@ -186,17 +460,6 @@
         .stagger-5 { animation-delay: 0.25s; }
         .stagger-6 { animation-delay: 0.3s; }
         .stagger-7 { animation-delay: 0.35s; }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: var(--text-primary);
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin-bottom: 4px;
-            width: 100%;
-        }
 
         .video-preview {
             background: rgba(18, 22, 30, 0.4);
@@ -266,29 +529,16 @@
         .video-preview-title { color: var(--text-primary); font-weight: 600; font-size: 0.9rem; margin-bottom: 4px; }
         .video-preview-channel { color: var(--text-secondary); font-size: 0.75rem; }
 
-        .welcome-banner {
-            background: rgba(18,22,30,0.4);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: var(--radius-lg);
-            padding: 18px;
-            animation: fadeInUp 0.6s ease both;
-            position: relative;
-            overflow: hidden;
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            width: 100%;
         }
-
-        .welcome-banner::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08) 50%, transparent);
-        }
-
-        .accent { color: var(--accent); }
-        .text-muted { color: var(--text-muted); }
-        .text-secondary { color: var(--text-secondary); }
 
         .grid-nav {
             display: flex;
@@ -309,7 +559,7 @@
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border-radius: 35px;
-            padding: 10px 16px;
+            padding: 10px 50px 10px 16px;
             text-align: center;
             color: #d4b860;
             font-size: 0.65rem;
@@ -327,7 +577,7 @@
             animation: fadeInUp 0.6s ease both;
             border: 1px solid rgba(201,160,80,0.3);
             box-shadow: 0 0 10px rgba(201,160,80,0.15), inset 0 1px 0 rgba(255,255,255,0.06), 0 3px 8px rgba(0,0,0,0.4);
-            overflow: hidden;
+            overflow: visible;
         }
 
         .nav-card::before {
@@ -338,22 +588,20 @@
             background: linear-gradient(180deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.04) 40%, rgba(255,255,255,0) 100%);
             border-radius: 35px 35px 50% 50%;
             pointer-events: none;
-        }
-
-        .nav-card::after {
-            content: '';
-            position: absolute;
-            bottom: 2px; left: 12px; right: 12px;
-            height: 15%;
-            background: linear-gradient(0deg, rgba(255,200,130,0.06) 0%, rgba(255,200,130,0) 100%);
-            border-radius: 50%;
-            pointer-events: none;
+            z-index: 0;
         }
 
         .nav-card span {
             font-size: 1.2rem;
             filter: drop-shadow(0 0 5px rgba(201,160,80,0.3));
             transition: transform 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .nav-card .nav-text {
+            position: relative;
+            z-index: 1;
         }
 
         .nav-card:hover { 
@@ -365,11 +613,21 @@
             transform: scale(0.95); 
             border-color: rgba(201,160,80,0.7); 
             transition: all 0.1s ease;
-            box-shadow: 0 0 5px rgba(201,160,80,0.3), inset 0 1px 0 rgba(255,255,255,0.06), 0 2px 4px rgba(0,0,0,0.4);
         }
-        
-        .nav-card:active span {
-            transform: scale(0.9);
+
+        /* Контейнер для кнопок редагування на картках */
+        .edit-buttons-group {
+            position: absolute;
+            right: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            gap: 3px;
+            z-index: 2;
+            background: rgba(18, 14, 7, 0.8);
+            border-radius: 10px;
+            padding: 3px;
+            backdrop-filter: blur(5px);
         }
 
         .btn-back {
@@ -392,12 +650,6 @@
         }
 
         .btn-back:hover { background: rgba(255,255,255,0.08); color: var(--text-primary); }
-        .btn-back:active { 
-            transform: scale(0.95); 
-            background: rgba(201,160,80,0.15); 
-            border-color: rgba(201,160,80,0.4); 
-            transition: all 0.1s ease;
-        }
 
         .news-item {
             background: rgba(18,22,30,0.4);
@@ -465,8 +717,6 @@
             background: rgba(201,160,80,0.2); 
             border-color: #d4a840; 
             transform: scale(0.94); 
-            box-shadow: 0 0 20px rgba(201,160,80,0.3);
-            transition: all 0.1s ease;
         }
 
         .btn-glow {
@@ -478,12 +728,6 @@
             box-shadow: 0 0 25px rgba(201,160,80,0.5), 0 0 60px rgba(201,160,80,0.2), inset 0 1px 0 rgba(255,255,255,0.2);
         }
 
-        .btn-glow:active { 
-            transform: scale(0.93); 
-            box-shadow: 0 0 35px rgba(201,160,80,0.7), 0 0 80px rgba(201,160,80,0.3);
-            transition: all 0.1s ease;
-        }
-
         .btn-wave {
             padding: 12px 30px;
             border-radius: 50px;
@@ -492,13 +736,6 @@
             color: #e0e8f0;
             border: 1px solid rgba(255,255,255,0.08);
             box-shadow: 0 4px 16px rgba(0,0,0,0.4);
-        }
-
-        .btn-wave:active { 
-            border-color: rgba(201,160,80,0.4); 
-            transform: scale(0.94); 
-            box-shadow: 0 2px 8px rgba(0,0,0,0.6);
-            transition: all 0.1s ease;
         }
 
         .btn-sm { padding: 8px 16px; font-size: 0.7rem; border-radius: 40px; }
@@ -529,18 +766,6 @@
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(201,160,80,0.5);
         }
-
-        .badge-notif {
-            background: #e63946;
-            border-radius: 10px;
-            padding: 2px 7px;
-            font-size: 0.65rem;
-            color: white;
-            font-weight: 600;
-            animation: badgePulse 2s infinite;
-        }
-
-        @keyframes badgePulse { 0%,100%{opacity:1;} 50%{opacity:0.5;} }
 
         .disclaimer-text {
             text-align: center;
@@ -604,10 +829,11 @@
             <div class="loader-ring"></div>
         </div>
         <div class="header">
-            <div class="logo-area">
+            <div class="header-left">
                 <div class="logo-icon"></div>
                 <span class="brand-text">Дневник Активов</span>
             </div>
+            <button class="admin-gear-btn" id="adminGearBtn" title="Редактирование">⚙️</button>
         </div>
         <div class="main-content" id="mainContent"></div>
     </div>
@@ -616,7 +842,6 @@
         (function() {
             const tg = window.Telegram?.WebApp;
             
-            // Функція для безпечної ініціалізації Telegram WebApp
             function initTelegram() {
                 if (!tg) return;
                 try {
@@ -624,41 +849,28 @@
                     tg.expand(); 
                     tg.setHeaderColor('secondary_bg_color'); 
                     tg.setBackgroundColor('#06080c');
-                } catch(e) {
-                    console.log('Telegram WebApp init error:', e);
-                }
+                } catch(e) {}
             }
             
             initTelegram();
 
-            const YOUTUBE_URL = 'https://www.youtube.com/@DnevnikAktivov';
-            const NEWS_URL = 'https://t.me/dnevnikaktivovnews';
-            const POSTS_URL = 'https://t.me/dnevnikaktivov';
+            let isAdminMode = false;
+            let currentEditModal = null;
 
             const loadingScreen = document.getElementById('loadingScreen');
             const mainContent = document.getElementById('mainContent');
             const appContainer = document.getElementById('app');
+            const adminGearBtn = document.getElementById('adminGearBtn');
             
-            // Гарантовано прибираємо loading screen
             function hideLoadingScreen() {
                 if (loadingScreen && !loadingScreen.classList.contains('hidden')) {
                     loadingScreen.classList.add('hidden');
                 }
             }
 
-            // Прибираємо loading screen після завантаження
-            if (document.readyState === 'complete') {
-                setTimeout(hideLoadingScreen, 300);
-            } else {
-                window.addEventListener('load', () => {
-                    setTimeout(hideLoadingScreen, 300);
-                });
-            }
-
-            // Додатковий захист — прибираємо через 1.5 секунди в будь-якому випадку
+            setTimeout(hideLoadingScreen, 300);
             setTimeout(hideLoadingScreen, 1500);
 
-            // Оптимізований обробник ripple ефекту
             document.addEventListener('click', function(e) {
                 const btn = e.target.closest('.btn');
                 if (!btn) return;
@@ -673,147 +885,491 @@
                 btn.appendChild(ripple);
                 
                 ripple.addEventListener('animationend', () => {
-                    if (ripple.parentNode) {
-                        ripple.remove();
-                    }
+                    if (ripple.parentNode) ripple.remove();
                 });
             });
 
-            const state = { section: 'home', bookmarks: new Set(), notifications: 3 };
+            adminGearBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // Додаємо анімацію обертання
+                adminGearBtn.style.animation = 'none';
+                adminGearBtn.offsetHeight;
+                adminGearBtn.style.animation = 'gearSpin 0.6s ease';
+                
+                setTimeout(() => {
+                    isAdminMode = !isAdminMode;
+                    
+                    if (isAdminMode) {
+                        adminGearBtn.classList.add('active');
+                        adminGearBtn.title = 'Выключить редактирование';
+                    } else {
+                        adminGearBtn.classList.remove('active');
+                        adminGearBtn.title = 'Редактирование';
+                    }
+                    
+                    navigate(state.section);
+                    
+                    if (tg?.HapticFeedback) {
+                        try { tg.HapticFeedback.impactOccurred('medium'); } catch(e) {}
+                    }
+                }, 300);
+            });
+
+            // Функція для відкриття галереї
+            function openImagePicker(callback) {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = 'image/*';
+                input.style.display = 'none';
+                document.body.appendChild(input);
+                
+                input.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(event) {
+                            callback(event.target.result, file.name);
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                    document.body.removeChild(input);
+                });
+                
+                input.click();
+            }
+
+            // Функція для створення модального вікна
+            function showEditModal(title, fields, onSave) {
+                if (currentEditModal) {
+                    document.body.removeChild(currentEditModal);
+                }
+                
+                const overlay = document.createElement('div');
+                overlay.className = 'edit-modal-overlay';
+                
+                let fieldsHTML = '';
+                fields.forEach(field => {
+                    if (field.type === 'image') {
+                        fieldsHTML += `
+                            <div class="field">
+                                <label>${field.label}</label>
+                                <div class="image-upload-area" id="modal_image_picker">
+                                    ${field.value ? `<img src="${field.value}" alt="Preview"><br>` : ''}
+                                    <span>📷 Нажмите чтобы выбрать изображение</span>
+                                    <input type="hidden" id="modal_${field.id}" value="${field.value || ''}">
+                                </div>
+                            </div>`;
+                    } else {
+                        fieldsHTML += `
+                            <div class="field">
+                                <label>${field.label}</label>
+                                <input type="${field.type || 'text'}" id="modal_${field.id}" value="${field.value || ''}" placeholder="${field.placeholder || ''}">
+                            </div>`;
+                    }
+                });
+                
+                overlay.innerHTML = `
+                    <div class="edit-modal">
+                        <h3>${title}</h3>
+                        ${fieldsHTML}
+                        <div class="actions">
+                            <button class="btn-modal cancel" id="modalCancel">Отмена</button>
+                            <button class="btn-modal save" id="modalSave">Сохранить</button>
+                        </div>
+                    </div>`;
+                
+                document.body.appendChild(overlay);
+                currentEditModal = overlay;
+                
+                // Обробник для вибору зображення
+                const imagePicker = overlay.querySelector('#modal_image_picker');
+                if (imagePicker) {
+                    imagePicker.addEventListener('click', function() {
+                        openImagePicker(function(dataUrl, fileName) {
+                            const img = imagePicker.querySelector('img');
+                            const input = imagePicker.querySelector('input');
+                            if (img) {
+                                img.src = dataUrl;
+                            } else {
+                                const newImg = document.createElement('img');
+                                newImg.src = dataUrl;
+                                newImg.alt = 'Preview';
+                                imagePicker.insertBefore(newImg, imagePicker.firstChild);
+                                imagePicker.insertBefore(document.createElement('br'), imagePicker.children[1]);
+                            }
+                            input.value = fileName;
+                        });
+                    });
+                }
+                
+                setTimeout(() => {
+                    const firstInput = overlay.querySelector('input[type="text"]');
+                    if (firstInput) firstInput.focus();
+                }, 100);
+                
+                overlay.querySelector('#modalCancel').addEventListener('click', closeEditModal);
+                overlay.querySelector('#modalSave').addEventListener('click', () => {
+                    const values = {};
+                    fields.forEach(field => {
+                        const input = overlay.querySelector(`#modal_${field.id}`);
+                        values[field.id] = input ? input.value : '';
+                    });
+                    closeEditModal();
+                    if (onSave) onSave(values);
+                });
+                
+                overlay.addEventListener('click', function(e) {
+                    if (e.target === overlay) closeEditModal();
+                });
+                
+                overlay.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
+                        overlay.querySelector('#modalSave').click();
+                    }
+                });
+            }
+
+            function closeEditModal() {
+                if (currentEditModal) {
+                    document.body.removeChild(currentEditModal);
+                    currentEditModal = null;
+                }
+            }
+
+            const state = { 
+                section: 'home', 
+                bookmarks: new Set(), 
+                notifications: 3,
+                videoData: {
+                    title: '▶ Новое видео на канале',
+                    channel: 'Дневник Активов • Нажмите чтобы смотреть',
+                    url: 'https://www.youtube.com/@DnevnikAktivov'
+                },
+                navItems: [
+                    { emoji: '📰', text: 'Новости', url: 'https://t.me/dnevnikaktivovnews', nav: null },
+                    { emoji: '💬', text: 'Посты', url: 'https://t.me/dnevnikaktivov', nav: null },
+                    { emoji: '📚', text: 'Обучение', url: null, nav: 'education' },
+                    { emoji: '🔗', text: 'Биржи', url: null, nav: 'links' },
+                    { emoji: '💼', text: 'Портфель', url: null, nav: 'portfolio' }
+                ],
+                educationItems: [
+                    { title: '💰 Первые $1000 — база', description: 'Базовый курс для начинающих', url: 'https://t.me/dnevnikaktivov_pervie1000' },
+                    { title: '🔒 Секретный дневник — практика', description: 'Практические советы и стратегии', url: 'https://t.me/dnevnikaktivov/78' },
+                    { title: '🎓 Академия — полный путь инвестора', description: 'Полный курс по инвестированию', url: 'https://t.me/dnevnikaktivov/10899' },
+                    { title: '🏆 Все челленджи', description: 'Все задания и челленджи одним списком', url: 'https://t.me/dnevnikaktivov/10195' }
+                ],
+                exchangeItems: [
+                    { name: 'Binance', description: 'до $300 приветственный бонус', url: 'https://www.binance.com/join?ref=3074', image: 'binance.png' },
+                    { name: 'ByBit', description: 'скидка + до $4000 бонуса', url: 'https://partner.bybit.com/b/dnevnikaktiv', image: 'bybit.jpg' },
+                    { name: 'Mexc', description: 'код 1VqKK • бонус до $1,000 USDT', url: 'https://www.mexc.com/register?inviteCode=1VqKK', image: 'mexc.png' },
+                    { name: 'Bingx', description: 'код 46HZUC • бонус до $5,000 USDT', url: 'https://bingx.com/invite/46HZUC', image: 'bingx.png' },
+                    { name: 'BITGET', description: 'бонус до $30,000 USDT', url: 'https://partner.bitget.com/bg/UDX26A', image: 'bitget.png' },
+                    { name: 'OKX', description: 'код 36759163 • бонус до $64 000', url: 'https://www.okx.com/join/36759163', image: 'okx.png' },
+                    { name: 'Gate', description: 'код 15688798 • бонус $50 USDT', url: 'https://go.gate.io/w/GMgPSct6', image: 'gate.jpg' }
+                ],
+                portfolio: {
+                    composition: 'BTC 45% | ETH 30% | SOL 15% | Другое 10%',
+                    performance: '+24.8% за всё время'
+                }
+            };
+
+            function renderAdminBar(title, onAdd, addLabel) {
+                return `
+                    <div class="admin-bar">
+                        <span>✎ ${title}</span>
+                        <div class="admin-bar-actions">
+                            ${onAdd ? `<button class="btn-admin primary" onclick="(${onAdd.toString()})();">+ ${addLabel || 'Добавить'}</button>` : ''}
+                            <button class="btn-admin" onclick="window.toggleAdminMode();">Готово</button>
+                        </div>
+                    </div>`;
+            }
+
+            window.toggleAdminMode = function() {
+                isAdminMode = !isAdminMode;
+                if (isAdminMode) {
+                    adminGearBtn.classList.add('active');
+                    adminGearBtn.title = 'Выключить редактирование';
+                } else {
+                    adminGearBtn.classList.remove('active');
+                    adminGearBtn.title = 'Редактирование';
+                }
+                navigate(state.section);
+            };
 
             function renderHome() {
+                let navCardsHTML = '';
+                state.navItems.forEach((item, index) => {
+                    const clickHandler = item.url 
+                        ? `onclick="window.open('${item.url}', '_blank');"` 
+                        : `data-nav="${item.nav}"`;
+                    
+                    navCardsHTML += `
+                        <div class="nav-card stagger-${index + 1}" ${clickHandler}>
+                            <span>${item.emoji}</span>
+                            <span class="nav-text">${item.text}</span>
+                            ${isAdminMode ? `
+                                <div class="edit-buttons-group">
+                                    <button class="edit-icon-btn edit" onclick="event.stopPropagation(); editNavItem(${index});" title="Редактировать">✏️</button>
+                                    <button class="edit-icon-btn delete" onclick="event.stopPropagation(); deleteNavItem(${index});" title="Удалить">🗑️</button>
+                                </div>
+                            ` : ''}
+                        </div>`;
+                });
+
                 return `
-          <div class="video-preview stagger-1" onclick="window.open('${YOUTUBE_URL}', '_blank');">
-            <div class="video-preview-thumb">
-              <div class="play-button-overlay"></div>
-            </div>
-            <div class="video-preview-info">
-              <div class="video-preview-title">▶ Новое видео на канале</div>
-              <div class="video-preview-channel">Дневник Активов • Нажмите чтобы смотреть</div>
-            </div>
-          </div>
-          <div class="grid-nav">
-            <div class="nav-card stagger-1" onclick="window.open('${NEWS_URL}', '_blank');"><span>📰</span>Новости</div>
-            <div class="nav-card stagger-1" onclick="window.open('${POSTS_URL}', '_blank');"><span>💬</span>Посты</div>
-            <div class="nav-card stagger-2" data-nav="education"><span>📚</span>Обучение</div>
-            <div class="nav-card stagger-2" data-nav="links"><span>🔗</span>Биржи</div>
-            <div class="nav-card stagger-3" data-nav="portfolio"><span>💼</span>Портфель</div>
-          </div>
-          <div class="disclaimer-text">
-            Всё, что я показываю — это мой личный опыт и стратегия долгосрочных инвестиций.<br>
-            <strong>Это не финансовая рекомендация.</strong>
-          </div>`;
+                    ${isAdminMode ? renderAdminBar('Редактирование главного меню', function() { addNavItem(); }, 'Кнопку') : ''}
+                    <div class="video-preview stagger-1" onclick="window.open('${state.videoData.url}', '_blank');">
+                        <div class="video-preview-thumb">
+                            <div class="play-button-overlay"></div>
+                        </div>
+                        <div class="video-preview-info">
+                            <div class="video-preview-title">${state.videoData.title}</div>
+                            <div class="video-preview-channel">${state.videoData.channel}</div>
+                        </div>
+                        ${isAdminMode ? `
+                            <div style="position: absolute; top: 8px; right: 8px; display: flex; gap: 4px;">
+                                <button class="edit-icon-btn edit" onclick="event.stopPropagation(); editVideoPreview();" title="Редактировать">✏️</button>
+                            </div>
+                        ` : ''}
+                    </div>
+                    <div class="grid-nav">
+                        ${navCardsHTML}
+                    </div>
+                    <div class="disclaimer-text">
+                        Всё, что я показываю — это мой личный опыт и стратегия долгосрочных инвестиций.<br>
+                        <strong>Это не финансовая рекомендация.</strong>
+                    </div>`;
             }
 
             function renderEducation() {
+                let itemsHTML = '';
+                state.educationItems.forEach((item, index) => {
+                    itemsHTML += `
+                        <div class="news-item stagger-${index + 1}" onclick="window.open('${item.url}', '_blank');">
+                            <div style="color:var(--text-primary); font-weight:600; padding-right: ${isAdminMode ? '60px' : '0'};">${item.title}</div>
+                            <div style="color:var(--text-secondary); font-size:0.75rem;">${item.description}</div>
+                            <button class="btn btn-neon btn-sm" style="margin-top:8px;" onclick="event.stopPropagation(); window.open('${item.url}', '_blank');">Открыть</button>
+                            ${isAdminMode ? `
+                                <div style="position: absolute; top: 8px; right: 8px; display: flex; gap: 4px;">
+                                    <button class="edit-icon-btn edit" onclick="event.stopPropagation(); editEducationItem(${index});" title="Редактировать">✏️</button>
+                                    <button class="edit-icon-btn delete" onclick="event.stopPropagation(); deleteEducationItem(${index});" title="Удалить">🗑️</button>
+                                </div>
+                            ` : ''}
+                        </div>`;
+                });
+
                 return `
-          <button class="btn-back" onclick="navigate('home');">← Назад</button>
-          <div class="section-header">📚 Крипто образование</div>
-          <div class="news-item stagger-1" onclick="window.open('https://t.me/dnevnikaktivov_pervie1000', '_blank');">
-            <div style="color:var(--text-primary); font-weight:600;">💰 Первые $1000 — база</div>
-            <div style="color:var(--text-secondary); font-size:0.75rem;">Базовый курс для начинающих</div>
-            <button class="btn btn-neon btn-sm" style="margin-top:8px;" onclick="event.stopPropagation(); window.open('https://t.me/dnevnikaktivov_pervie1000', '_blank');">Открыть</button>
-          </div>
-          <div class="news-item stagger-2" onclick="window.open('https://t.me/dnevnikaktivov/78', '_blank');">
-            <div style="color:var(--text-primary); font-weight:600;">🔒 Секретный дневник — практика</div>
-            <div style="color:var(--text-secondary); font-size:0.75rem;">Практические советы и стратегии</div>
-            <button class="btn btn-neon btn-sm" style="margin-top:8px;" onclick="event.stopPropagation(); window.open('https://t.me/dnevnikaktivov/78', '_blank');">Открыть</button>
-          </div>
-          <div class="news-item stagger-3" onclick="window.open('https://t.me/dnevnikaktivov/10899', '_blank');">
-            <div style="color:var(--text-primary); font-weight:600;">🎓 Академия — полный путь инвестора</div>
-            <div style="color:var(--text-secondary); font-size:0.75rem;">Полный курс по инвестированию</div>
-            <button class="btn btn-neon btn-sm" style="margin-top:8px;" onclick="event.stopPropagation(); window.open('https://t.me/dnevnikaktivov/10899', '_blank');">Открыть</button>
-          </div>
-          <div class="news-item stagger-4" onclick="window.open('https://t.me/dnevnikaktivov/10195', '_blank');">
-            <div style="color:var(--text-primary); font-weight:600;">🏆 Все челленджи</div>
-            <div style="color:var(--text-secondary); font-size:0.75rem;">Все задания и челленджи одним списком</div>
-            <button class="btn btn-neon btn-sm" style="margin-top:8px;" onclick="event.stopPropagation(); window.open('https://t.me/dnevnikaktivov/10195', '_blank');">Открыть</button>
-          </div>`;
+                    <button class="btn-back" onclick="navigate('home');">← Назад</button>
+                    ${isAdminMode ? renderAdminBar('Редактирование обучения', function() { addEducationItem(); }, 'Курс') : ''}
+                    <div class="section-header">📚 Крипто образование</div>
+                    ${itemsHTML}`;
             }
 
             function renderLinks() {
+                let itemsHTML = '';
+                state.exchangeItems.forEach((item, index) => {
+                    itemsHTML += `
+                        <div class="news-item stagger-${index + 1}" onclick="window.open('${item.url}', '_blank');" style="display:flex; align-items:center; gap:12px;">
+                            <img src="${item.image}" class="exchange-logo-img" alt="${item.name}">
+                            <div style="flex:1;min-width:0; padding-right: ${isAdminMode ? '50px' : '0'};">
+                                <div style="color:var(--text-primary);font-weight:600;font-size:0.85rem;">${item.name}</div>
+                                <div style="color:var(--text-secondary);font-size:0.7rem;">${item.description}</div>
+                            </div>
+                            <button class="btn btn-neon" onclick="event.stopPropagation();window.open('${item.url}','_blank');">Открыть</button>
+                            ${isAdminMode ? `
+                                <div style="position: absolute; top: 6px; right: 6px; display: flex; gap: 3px;">
+                                    <button class="edit-icon-btn edit" onclick="event.stopPropagation(); editExchangeItem(${index});" title="Редактировать">✏️</button>
+                                    <button class="edit-icon-btn delete" onclick="event.stopPropagation(); deleteExchangeItem(${index});" title="Удалить">🗑️</button>
+                                </div>
+                            ` : ''}
+                        </div>`;
+                });
+
                 return `
-          <button class="btn-back" onclick="navigate('home');">← Назад</button>
-          <div class="section-header">🔥 Биржи</div>
-          <div class="news-item stagger-1" onclick="window.open('https://www.binance.com/join?ref=3074', '_blank');" style="display:flex; align-items:center; gap:12px;">
-            <img src="binance.png" class="exchange-logo-img" alt="Binance">
-            <div style="flex:1;min-width:0;">
-              <div style="color:var(--text-primary);font-weight:600;font-size:0.85rem;">Binance</div>
-              <div style="color:var(--text-secondary);font-size:0.7rem;">до $300 приветственный бонус</div>
-            </div>
-            <button class="btn btn-neon" onclick="event.stopPropagation();window.open('https://www.binance.com/join?ref=3074','_blank');">Открыть</button>
-          </div>
-          <div class="news-item stagger-2" onclick="window.open('https://partner.bybit.com/b/dnevnikaktiv', '_blank');" style="display:flex; align-items:center; gap:12px;">
-            <img src="bybit.jpg" class="exchange-logo-img" alt="ByBit">
-            <div style="flex:1;min-width:0;">
-              <div style="color:var(--text-primary);font-weight:600;font-size:0.85rem;">ByBit</div>
-              <div style="color:var(--text-secondary);font-size:0.7rem;">скидка + до $4000 бонуса</div>
-            </div>
-            <button class="btn btn-neon" onclick="event.stopPropagation();window.open('https://partner.bybit.com/b/dnevnikaktiv','_blank');">Открыть</button>
-          </div>
-          <div class="news-item stagger-3" onclick="window.open('https://www.mexc.com/register?inviteCode=1VqKK', '_blank');" style="display:flex; align-items:center; gap:12px;">
-            <img src="mexc.png" class="exchange-logo-img" alt="Mexc">
-            <div style="flex:1;min-width:0;">
-              <div style="color:var(--text-primary);font-weight:600;font-size:0.85rem;">Mexc</div>
-              <div style="color:var(--text-secondary);font-size:0.7rem;">код 1VqKK • бонус до $1,000 USDT</div>
-            </div>
-            <button class="btn btn-neon" onclick="event.stopPropagation();window.open('https://www.mexc.com/register?inviteCode=1VqKK','_blank');">Открыть</button>
-          </div>
-          <div class="news-item stagger-4" onclick="window.open('https://bingx.com/invite/46HZUC', '_blank');" style="display:flex; align-items:center; gap:12px;">
-            <img src="bingx.png" class="exchange-logo-img" alt="Bingx">
-            <div style="flex:1;min-width:0;">
-              <div style="color:var(--text-primary);font-weight:600;font-size:0.85rem;">Bingx</div>
-              <div style="color:var(--text-secondary);font-size:0.7rem;">код 46HZUC • бонус до $5,000 USDT</div>
-            </div>
-            <button class="btn btn-neon" onclick="event.stopPropagation();window.open('https://bingx.com/invite/46HZUC','_blank');">Открыть</button>
-          </div>
-          <div class="news-item stagger-5" onclick="window.open('https://partner.bitget.com/bg/UDX26A', '_blank');" style="display:flex; align-items:center; gap:12px;">
-            <img src="bitget.png" class="exchange-logo-img" alt="BITGET">
-            <div style="flex:1;min-width:0;">
-              <div style="color:var(--text-primary);font-weight:600;font-size:0.85rem;">BITGET</div>
-              <div style="color:var(--text-secondary);font-size:0.7rem;">бонус до $30,000 USDT</div>
-            </div>
-            <button class="btn btn-neon" onclick="event.stopPropagation();window.open('https://partner.bitget.com/bg/UDX26A','_blank');">Открыть</button>
-          </div>
-          <div class="news-item stagger-6" onclick="window.open('https://www.okx.com/join/36759163', '_blank');" style="display:flex; align-items:center; gap:12px;">
-            <img src="okx.png" class="exchange-logo-img" alt="OKX">
-            <div style="flex:1;min-width:0;">
-              <div style="color:var(--text-primary);font-weight:600;font-size:0.85rem;">OKX</div>
-              <div style="color:var(--text-secondary);font-size:0.7rem;">код 36759163 • бонус до $64 000</div>
-            </div>
-            <button class="btn btn-neon" onclick="event.stopPropagation();window.open('https://www.okx.com/join/36759163','_blank');">Открыть</button>
-          </div>
-          <div class="news-item stagger-7" onclick="window.open('https://go.gate.io/w/GMgPSct6', '_blank');" style="display:flex; align-items:center; gap:12px;">
-            <img src="gate.jpg" class="exchange-logo-img" alt="Gate">
-            <div style="flex:1;min-width:0;">
-              <div style="color:var(--text-primary);font-weight:600;font-size:0.85rem;">Gate</div>
-              <div style="color:var(--text-secondary);font-size:0.7rem;">код 15688798 • бонус $50 USDT</div>
-            </div>
-            <button class="btn btn-neon" onclick="event.stopPropagation();window.open('https://go.gate.io/w/GMgPSct6','_blank');">Открыть</button>
-          </div>`;
+                    <button class="btn-back" onclick="navigate('home');">← Назад</button>
+                    ${isAdminMode ? renderAdminBar('Редактирование бирж', function() { addExchangeItem(); }, 'Биржу') : ''}
+                    <div class="section-header">🔥 Биржи</div>
+                    ${itemsHTML}`;
             }
 
             function renderPortfolio() {
                 return `
-          <button class="btn-back" onclick="navigate('home');">← Назад</button>
-          <div class="section-header">💼 Портфель создателя</div>
-          <div class="glass-card stagger-1">
-            <div style="color:var(--text-primary);">BTC 45% | ETH 30% | SOL 15% | Другое 10%</div>
-            <div class="poll-bar" style="margin:10px 0;"><div class="poll-fill" style="width:72%;"></div></div>
-            <div style="color:var(--text-secondary);">+24.8% за всё время</div>
-            <button class="btn btn-wave btn-full" style="margin-top:10px;">📊 Подробная статистика</button>
-          </div>`;
+                    <button class="btn-back" onclick="navigate('home');">← Назад</button>
+                    ${isAdminMode ? renderAdminBar('Редактирование портфеля', null) : ''}
+                    <div class="section-header">💼 Портфель создателя</div>
+                    <div class="glass-card stagger-1">
+                        <div style="color:var(--text-primary);">${state.portfolio.composition}</div>
+                        <div class="poll-bar" style="margin:10px 0;"><div class="poll-fill" style="width:72%;"></div></div>
+                        <div style="color:var(--text-secondary);">${state.portfolio.performance}</div>
+                        ${isAdminMode ? `
+                            <button class="btn-admin primary" style="margin-top:10px; width:100%;" onclick="editPortfolio();">✏️ Редактировать данные портфеля</button>
+                        ` : `
+                            <button class="btn btn-wave btn-full" style="margin-top:10px;">📊 Подробная статистика</button>
+                        `}
+                    </div>`;
             }
 
             function renderProfile() {
                 return `
-          <button class="btn-back" onclick="navigate('home');">← Назад</button>
-          <div class="welcome-banner stagger-1" style="text-align:center;">
-            <div style="font-size:2.5rem;">👤</div>
-            <div style="color:var(--text-primary); font-weight:700;">Профиль</div>
-            <div style="color:var(--text-secondary);">Сохранено: ${state.bookmarks.size}</div>
-            <button class="btn btn-glow btn-full" style="margin-top:12px;">⚙ Настройки</button>
-          </div>`;
+                    <button class="btn-back" onclick="navigate('home');">← Назад</button>
+                    <div class="welcome-banner stagger-1" style="text-align:center;">
+                        <div style="font-size:2.5rem;">👤</div>
+                        <div style="color:var(--text-primary); font-weight:700;">Профиль</div>
+                        <div style="color:var(--text-secondary);">Сохранено: ${state.bookmarks.size}</div>
+                        <button class="btn btn-glow btn-full" style="margin-top:12px;">⚙ Настройки</button>
+                    </div>`;
+            }
+
+            // Функції редагування
+            function editVideoPreview() {
+                showEditModal('Редактировать видео', [
+                    { id: 'title', label: 'Название', value: state.videoData.title },
+                    { id: 'channel', label: 'Канал', value: state.videoData.channel },
+                    { id: 'url', label: 'Ссылка', value: state.videoData.url }
+                ], (values) => {
+                    state.videoData.title = values.title;
+                    state.videoData.channel = values.channel;
+                    state.videoData.url = values.url;
+                    navigate('home');
+                });
+            }
+
+            function addNavItem() {
+                showEditModal('Новая кнопка', [
+                    { id: 'emoji', label: 'Эмодзи', placeholder: '📊' },
+                    { id: 'text', label: 'Название', placeholder: 'Аналитика' },
+                    { id: 'url', label: 'URL (или оставьте пустым для раздела)', placeholder: 'https://...' },
+                    { id: 'nav', label: 'Раздел (если нет URL): education, links, portfolio', placeholder: 'education' }
+                ], (values) => {
+                    if (!values.text) return;
+                    state.navItems.push({
+                        emoji: values.emoji || '📌',
+                        text: values.text,
+                        url: values.url || null,
+                        nav: values.url ? null : (values.nav || null)
+                    });
+                    navigate('home');
+                });
+            }
+
+            function editNavItem(index) {
+                const item = state.navItems[index];
+                showEditModal('Редактировать кнопку', [
+                    { id: 'emoji', label: 'Эмодзи', value: item.emoji },
+                    { id: 'text', label: 'Название', value: item.text },
+                    { id: 'url', label: 'URL', value: item.url || '' },
+                    { id: 'nav', label: 'Раздел', value: item.nav || '' }
+                ], (values) => {
+                    state.navItems[index] = {
+                        emoji: values.emoji,
+                        text: values.text,
+                        url: values.url || null,
+                        nav: values.url ? null : (values.nav || null)
+                    };
+                    navigate('home');
+                });
+            }
+
+            function deleteNavItem(index) {
+                if (confirm('Удалить эту кнопку?')) {
+                    state.navItems.splice(index, 1);
+                    navigate('home');
+                }
+            }
+
+            function addEducationItem() {
+                showEditModal('Новый курс', [
+                    { id: 'title', label: 'Название', placeholder: '📖 Новый курс' },
+                    { id: 'description', label: 'Описание', placeholder: 'Описание' },
+                    { id: 'url', label: 'Ссылка', placeholder: 'https://...' }
+                ], (values) => {
+                    if (!values.title || !values.url) return;
+                    state.educationItems.push({
+                        title: values.title,
+                        description: values.description,
+                        url: values.url
+                    });
+                    navigate('education');
+                });
+            }
+
+            function editEducationItem(index) {
+                const item = state.educationItems[index];
+                showEditModal('Редактировать курс', [
+                    { id: 'title', label: 'Название', value: item.title },
+                    { id: 'description', label: 'Описание', value: item.description },
+                    { id: 'url', label: 'Ссылка', value: item.url }
+                ], (values) => {
+                    state.educationItems[index] = {
+                        title: values.title,
+                        description: values.description,
+                        url: values.url
+                    };
+                    navigate('education');
+                });
+            }
+
+            function deleteEducationItem(index) {
+                if (confirm('Удалить этот курс?')) {
+                    state.educationItems.splice(index, 1);
+                    navigate('education');
+                }
+            }
+
+            function addExchangeItem() {
+                showEditModal('Новая биржа', [
+                    { id: 'name', label: 'Название', placeholder: 'Binance' },
+                    { id: 'description', label: 'Описание', placeholder: 'Бонус' },
+                    { id: 'url', label: 'Ссылка', placeholder: 'https://...' },
+                    { id: 'image', label: 'Логотип', type: 'image', placeholder: 'Выберите изображение' }
+                ], (values) => {
+                    if (!values.name || !values.url) return;
+                    state.exchangeItems.push({
+                        name: values.name,
+                        description: values.description,
+                        url: values.url,
+                        image: values.image || 'default.png'
+                    });
+                    navigate('links');
+                });
+            }
+
+            function editExchangeItem(index) {
+                const item = state.exchangeItems[index];
+                showEditModal('Редактировать биржу', [
+                    { id: 'name', label: 'Название', value: item.name },
+                    { id: 'description', label: 'Описание', value: item.description },
+                    { id: 'url', label: 'Ссылка', value: item.url },
+                    { id: 'image', label: 'Логотип', type: 'image', value: item.image }
+                ], (values) => {
+                    state.exchangeItems[index] = {
+                        name: values.name,
+                        description: values.description,
+                        url: values.url,
+                        image: values.image || item.image
+                    };
+                    navigate('links');
+                });
+            }
+
+            function deleteExchangeItem(index) {
+                if (confirm('Удалить эту биржу?')) {
+                    state.exchangeItems.splice(index, 1);
+                    navigate('links');
+                }
+            }
+
+            function editPortfolio() {
+                showEditModal('Редактировать портфель', [
+                    { id: 'composition', label: 'Состав', value: state.portfolio.composition },
+                    { id: 'performance', label: 'Доходность', value: state.portfolio.performance }
+                ], (values) => {
+                    state.portfolio.composition = values.composition;
+                    state.portfolio.performance = values.performance;
+                    navigate('portfolio');
+                });
             }
 
             const renderers = {
@@ -828,7 +1384,6 @@
 
             function navigate(section) {
                 if (isNavigating) return;
-                
                 isNavigating = true;
                 state.section = section;
                 
@@ -839,27 +1394,18 @@
                         mainContent.scrollTop = 0;
                     }
                 } catch(e) {
-                    console.error('Navigation error:', e);
-                    // У випадку помилки пробуємо відновити домашню сторінку
                     if (mainContent && section !== 'home') {
-                        try {
-                            mainContent.innerHTML = renderers.home();
-                        } catch(e2) {}
+                        try { mainContent.innerHTML = renderers.home(); } catch(e2) {}
                     }
                 }
                 
                 if (tg?.HapticFeedback) {
-                    try {
-                        tg.HapticFeedback.impactOccurred('light');
-                    } catch(e) {}
+                    try { tg.HapticFeedback.impactOccurred('light'); } catch(e) {}
                 }
                 
-                setTimeout(() => {
-                    isNavigating = false;
-                }, 100);
+                setTimeout(() => { isNavigating = false; }, 100);
             }
 
-            // Делегування подій для головного контенту
             if (mainContent) {
                 mainContent.addEventListener('click', function(e) {
                     const navCard = e.target.closest('.nav-card');
@@ -873,57 +1419,24 @@
                     if (backBtn) {
                         e.preventDefault();
                         navigate('home');
-                        return;
                     }
                 });
             }
 
-            // *** ГОЛОВНЕ ВИПРАВЛЕННЯ: Обробник видимості сторінки ***
-            // Відновлює контент при поверненні в додаток після згортання
-            document.addEventListener('visibilitychange', function() {
-                if (document.visibilityState === 'visible') {
-                    // Сторінка знову активна — відновлюємо все
-                    
-                    // 1. Прибираємо loading screen якщо він чомусь з'явився
-                    hideLoadingScreen();
-                    
-                    // 2. Перевіряємо чи контент на місці
-                    if (mainContent && (!mainContent.children || mainContent.children.length === 0)) {
-                        // Контент зник — відновлюємо поточну секцію
-                        navigate(state.section || 'home');
-                    }
-                    
-                    // 3. Переініціалізуємо Telegram WebApp
-                    if (tg) {
-                        try {
-                            tg.ready();
-                            tg.expand();
-                        } catch(e) {}
-                    }
-                    
-                    // 4. Примусово оновлюємо відображення
-                    if (appContainer) {
-                        appContainer.style.display = 'none';
-                        appContainer.offsetHeight; // force reflow
-                        appContainer.style.display = '';
-                    }
-                }
-            });
-            
-            // Додатковий обробник для resize (теж допомагає при поверненні)
-            let resizeTimeout;
-            window.addEventListener('resize', function() {
-                clearTimeout(resizeTimeout);
-                resizeTimeout = setTimeout(function() {
-                    if (tg) {
-                        try {
-                            tg.expand();
-                        } catch(e) {}
-                    }
-                }, 300);
-            });
+            // Експорт функцій
+            window.editVideoPreview = editVideoPreview;
+            window.addNavItem = addNavItem;
+            window.editNavItem = editNavItem;
+            window.deleteNavItem = deleteNavItem;
+            window.addEducationItem = addEducationItem;
+            window.editEducationItem = editEducationItem;
+            window.deleteEducationItem = deleteEducationItem;
+            window.addExchangeItem = addExchangeItem;
+            window.editExchangeItem = editExchangeItem;
+            window.deleteExchangeItem = deleteExchangeItem;
+            window.editPortfolio = editPortfolio;
+            window.navigate = navigate;
 
-            // Початкове завантаження
             navigate('home');
         })();
     </script>
