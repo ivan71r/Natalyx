@@ -652,7 +652,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
-            overflow: hidden;
+            overflow: visible;
         }
 
         .news-item::before {
@@ -707,6 +707,9 @@
             border: 1px solid rgba(201,160,80,0.35);
             box-shadow: 0 0 10px rgba(201,160,80,0.15);
             flex-shrink: 0;
+            margin-top: 8px;
+            display: inline-flex;
+            width: auto;
         }
 
         .btn-neon:active { 
@@ -1156,9 +1159,9 @@
                 state.educationItems.forEach((item, index) => {
                     itemsHTML += `
                         <div class="news-item stagger-${index + 1}" onclick="window.open('${item.url}', '_blank');">
-                            <div style="color:var(--text-primary); font-weight:600; padding-right: ${isAdminMode ? '60px' : '0'};">${item.title}</div>
-                            <div style="color:var(--text-secondary); font-size:0.75rem;">${item.description}</div>
-                            <button class="btn btn-neon btn-sm" style="margin-top:8px;" onclick="event.stopPropagation(); window.open('${item.url}', '_blank');">Открыть</button>
+                            <div style="color:var(--text-primary); font-weight:600; font-size:0.9rem; margin-bottom:4px; padding-right: ${isAdminMode ? '60px' : '0'};">${item.title}</div>
+                            <div style="color:var(--text-secondary); font-size:0.75rem; margin-bottom:8px;">${item.description}</div>
+                            <button class="btn btn-neon btn-sm" onclick="event.stopPropagation(); window.open('${item.url}', '_blank');">Открыть</button>
                             ${isAdminMode ? `
                                 <div style="position: absolute; top: 8px; right: 8px; display: flex; gap: 4px;">
                                     <button class="edit-icon-btn edit" onclick="event.stopPropagation(); editEducationItem(${index});" title="Редактировать">✏️</button>
