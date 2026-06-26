@@ -39,12 +39,19 @@
             padding: 8px;
             margin: 0;
             -webkit-font-smoothing: antialiased;
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
         }
 
         .app-container {
             max-width: 430px;
             width: 100%;
-            height: 820px;
+            height: 100%;
+            max-height: 820px;
             background:
                 linear-gradient(135deg, rgba(10, 14, 20, 0.75), rgba(6, 8, 12, 0.82)),
                 url('bg.jpg') center/cover no-repeat;
@@ -102,6 +109,7 @@
             justify-content: space-between;
             position: relative;
             z-index: 2;
+            flex-shrink: 0;
         }
 
         .header-left {
@@ -186,6 +194,9 @@
             z-index: 2;
             scrollbar-width: thin;
             scrollbar-color: rgba(255, 255, 255, 0.06) transparent;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
+            touch-action: pan-y;
         }
 
         .main-content::-webkit-scrollbar { width: 3px; }
@@ -798,7 +809,7 @@
             align-items: center;
             justify-content: center;
             border-radius: 38px;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
         }
 
         .loading-screen.hidden { 
@@ -869,8 +880,20 @@
                 }
             }
 
-            setTimeout(hideLoadingScreen, 300);
-            setTimeout(hideLoadingScreen, 1500);
+            setTimeout(hideLoadingScreen, 100);
+
+            // Виправлення чорного екрану при поверненні в міні-апп
+            document.addEventListener('visibilitychange', function() {
+                if (document.visibilityState === 'visible') {
+                    hideLoadingScreen();
+                    if (tg) {
+                        try {
+                            tg.ready();
+                            tg.expand();
+                        } catch(e) {}
+                    }
+                }
+            });
 
             document.addEventListener('click', function(e) {
                 const btn = e.target.closest('.btn');
@@ -1464,21 +1487,33 @@
             };
 
             let isNavigating = false;
+            // Зберігаємо позиції прокрутки для кожного розділу
+            const scrollPositions = {};
 
             function navigate(section) {
                 if (isNavigating) return;
                 isNavigating = true;
+                
+                // Зберігаємо поточну позицію прокрутки перед зміною розділу
+                if (mainContent && state.section) {
+                    scrollPositions[state.section] = mainContent.scrollTop;
+                }
+                
                 state.section = section;
                 
                 try {
                     const content = renderers[section]?.() || '';
                     if (mainContent) {
                         mainContent.innerHTML = content;
-                        mainContent.scrollTop = 0;
+                        // Відновлюємо збережену позицію прокрутки для цього розділу, або 0 якщо це новий розділ
+                        mainContent.scrollTop = scrollPositions[section] || 0;
                     }
                 } catch(e) {
                     if (mainContent && section !== 'home') {
-                        try { mainContent.innerHTML = renderers.home(); } catch(e2) {}
+                        try { 
+                            mainContent.innerHTML = renderers.home();
+                            mainContent.scrollTop = scrollPositions['home'] || 0;
+                        } catch(e2) {}
                     }
                 }
                 
