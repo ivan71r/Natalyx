@@ -587,7 +587,6 @@
             z-index: 1;
         }
 
-        /* НОВИЙ КЛАС ДЛЯ ЗМЕНШЕНОГО ШРИФТУ НА КНОПКАХ МЕНЮ */
         .nav-card .nav-text-sm {
             font-size: 0.55rem;
             position: relative;
@@ -671,6 +670,14 @@
             width: 40px;
             height: 40px;
             border-radius: 10px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
+        .wallet-logo-img {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
             object-fit: contain;
             flex-shrink: 0;
         }
@@ -916,7 +923,6 @@
                     if (file) {
                         const reader = new FileReader();
                         reader.onload = function(event) {
-                            // Передаємо data URL та ім'я файлу
                             callback(event.target.result, file.name);
                         };
                         reader.readAsDataURL(file);
@@ -935,7 +941,6 @@
                 const overlay = document.createElement('div');
                 overlay.className = 'edit-modal-overlay';
                 
-                // Зберігаємо тимчасове зображення
                 let tempImageDataUrl = null;
                 
                 let fieldsHTML = '';
@@ -973,15 +978,12 @@
                 document.body.appendChild(overlay);
                 currentEditModal = overlay;
                 
-                // Обробник для вибору зображення
                 const imagePicker = overlay.querySelector('#modal_image_picker');
                 if (imagePicker) {
                     imagePicker.addEventListener('click', function() {
                         openImagePicker(function(dataUrl, fileName) {
-                            // Зберігаємо data URL тимчасово
                             tempImageDataUrl = dataUrl;
                             
-                            // Оновлюємо прев'ю
                             const existingImg = imagePicker.querySelector('img');
                             if (existingImg) {
                                 existingImg.src = dataUrl;
@@ -995,7 +997,6 @@
                                 imagePicker.insertBefore(document.createElement('br'), span);
                             }
                             
-                            // Оновлюємо приховане поле з data URL
                             const hiddenInput = imagePicker.querySelector('input');
                             hiddenInput.value = dataUrl;
                         });
@@ -1052,13 +1053,16 @@
                     { emoji: '💬', text: 'Посты', url: 'https://t.me/dnevnikaktivov', nav: null },
                     { emoji: '📚', text: 'Обучение', url: null, nav: 'education' },
                     { emoji: '🔗', text: 'Биржи', url: null, nav: 'links' },
-                    { emoji: '💼', text: 'Портфель', url: null, nav: 'portfolio' }
+                    { emoji: '💼', text: 'Портфель', url: null, nav: 'portfolio' },
+                    { emoji: '🔐', text: 'Кошельки', url: null, nav: 'wallets' }
                 ],
                 educationItems: [
                     { title: '💰 Первые $1000 — база', description: 'Базовый курс для начинающих', url: 'https://t.me/dnevnikaktivov_pervie1000' },
                     { title: '🔒 Секретный дневник — практика', description: 'Практические советы и стратегии', url: 'https://t.me/dnevnikaktivov/78' },
                     { title: '🎓 Академия — полный путь инвестора', description: 'Полный курс по инвестированию', url: 'https://t.me/dnevnikaktivov/10899' },
-                    { title: '🏆 Все челленджи', description: 'Все задания и челленджи одним списком', url: 'https://t.me/dnevnikaktivov/10195' }
+                    { title: '🏆 Все челленджи', description: 'Все задания и челленджи одним списком', url: 'https://t.me/dnevnikaktivov/10195' },
+                    { title: '🔥 Interactive brokers/IBKR', description: 'Брокер (акции и облигации) • До $1000 бонуса за объем и пополнения депозита 💰', url: 'https://ibkr.com/referral/illia314' },
+                    { title: '📱 Соцсети как актив', description: 'Направьте социальные сети работать на себя', url: 'https://t.me/dnevnikaktivov/13417' }
                 ],
                 exchangeItems: [
                     { name: 'Binance', description: 'до $300 приветственный бонус', url: 'https://www.binance.com/join?ref=3074', image: 'binance.png' },
@@ -1068,6 +1072,10 @@
                     { name: 'BITGET', description: 'бонус до $30,000 USDT', url: 'https://partner.bitget.com/bg/UDX26A', image: 'bitget.png' },
                     { name: 'OKX', description: 'код 36759163 • бонус до $64 000', url: 'https://www.okx.com/join/36759163', image: 'okx.png' },
                     { name: 'Gate', description: 'код 15688798 • бонус $50 USDT', url: 'https://go.gate.io/w/GMgPSct6', image: 'gate.jpg' }
+                ],
+                walletItems: [
+                    { name: 'SafePal', description: 'Апаратний гаманець S1', url: 'https://www.safepal.com/store/s1?ref=...', image: 'safepal.png' },
+                    { name: 'Ledger', description: 'Апаратний гаманець', url: 'https://shop.ledger.com/?r=af70c80884d2', image: 'ledger.png' }
                 ],
                 portfolio: {
                     composition: 'BTC 45% | ETH 30% | SOL 15% | Другое 10%',
@@ -1194,6 +1202,33 @@
                     ${itemsHTML}`;
             }
 
+            function renderWallets() {
+                let itemsHTML = '';
+                state.walletItems.forEach((item, index) => {
+                    itemsHTML += `
+                        <div class="news-item stagger-${index + 1}" onclick="window.open('${item.url}', '_blank');" style="display:flex; align-items:center; gap:12px;">
+                            <img src="${item.image}" class="wallet-logo-img" alt="${item.name}">
+                            <div style="flex:1;min-width:0; padding-right: ${isAdminMode ? '50px' : '0'};">
+                                <div style="color:var(--text-primary);font-weight:600;font-size:0.85rem;">${item.name}</div>
+                                <div style="color:var(--text-secondary);font-size:0.7rem;">${item.description}</div>
+                            </div>
+                            <button class="btn btn-neon" onclick="event.stopPropagation();window.open('${item.url}','_blank');">Открыть</button>
+                            ${isAdminMode ? `
+                                <div style="position: absolute; top: 6px; right: 6px; display: flex; gap: 3px;">
+                                    <button class="edit-icon-btn edit" onclick="event.stopPropagation(); editWalletItem(${index});" title="Редактировать">✏️</button>
+                                    <button class="edit-icon-btn delete" onclick="event.stopPropagation(); deleteWalletItem(${index});" title="Удалить">🗑️</button>
+                                </div>
+                            ` : ''}
+                        </div>`;
+                });
+
+                return `
+                    <button class="btn-back" onclick="navigate('home');">← Назад</button>
+                    ${isAdminMode ? renderAdminBar('Редактирование кошельков', function() { addWalletItem(); }, 'Кошелёк') : ''}
+                    <div class="section-header">🔐 Крипто Кошельки</div>
+                    ${itemsHTML}`;
+            }
+
             function renderPortfolio() {
                 return `
                     <button class="btn-back" onclick="navigate('home');">← Назад</button>
@@ -1240,7 +1275,7 @@
                     { id: 'emoji', label: 'Эмодзи', placeholder: '📊' },
                     { id: 'text', label: 'Название', placeholder: 'Аналитика' },
                     { id: 'url', label: 'URL (или оставьте пустым для раздела)', placeholder: 'https://...' },
-                    { id: 'nav', label: 'Раздел (если нет URL): education, links, portfolio', placeholder: 'education' }
+                    { id: 'nav', label: 'Раздел (если нет URL): education, links, wallets, portfolio', placeholder: 'education' }
                 ], (values) => {
                     if (!values.text) return;
                     state.navItems.push({
@@ -1360,6 +1395,49 @@
                 }
             }
 
+            function addWalletItem() {
+                showEditModal('Новый кошелёк', [
+                    { id: 'name', label: 'Название', placeholder: 'SafePal' },
+                    { id: 'description', label: 'Описание', placeholder: 'Аппаратный кошелёк' },
+                    { id: 'url', label: 'Ссылка', placeholder: 'https://...' },
+                    { id: 'image', label: 'Логотип', type: 'image' }
+                ], (values) => {
+                    if (!values.name || !values.url) return;
+                    state.walletItems.push({
+                        name: values.name,
+                        description: values.description,
+                        url: values.url,
+                        image: values.image || 'default.png'
+                    });
+                    navigate('wallets');
+                });
+            }
+
+            function editWalletItem(index) {
+                const item = state.walletItems[index];
+                showEditModal('Редактировать кошелёк', [
+                    { id: 'name', label: 'Название', value: item.name },
+                    { id: 'description', label: 'Описание', value: item.description },
+                    { id: 'url', label: 'Ссылка', value: item.url },
+                    { id: 'image', label: 'Логотип', type: 'image', value: item.image }
+                ], (values) => {
+                    state.walletItems[index] = {
+                        name: values.name,
+                        description: values.description,
+                        url: values.url,
+                        image: values.image || item.image
+                    };
+                    navigate('wallets');
+                });
+            }
+
+            function deleteWalletItem(index) {
+                if (confirm('Удалить этот кошелёк?')) {
+                    state.walletItems.splice(index, 1);
+                    navigate('wallets');
+                }
+            }
+
             function editPortfolio() {
                 showEditModal('Редактировать портфель', [
                     { id: 'composition', label: 'Состав', value: state.portfolio.composition },
@@ -1375,6 +1453,7 @@
                 home: renderHome, 
                 education: renderEducation,
                 links: renderLinks, 
+                wallets: renderWallets,
                 portfolio: renderPortfolio, 
                 profile: renderProfile
             };
@@ -1432,6 +1511,9 @@
             window.addExchangeItem = addExchangeItem;
             window.editExchangeItem = editExchangeItem;
             window.deleteExchangeItem = deleteExchangeItem;
+            window.addWalletItem = addWalletItem;
+            window.editWalletItem = editWalletItem;
+            window.deleteWalletItem = deleteWalletItem;
             window.editPortfolio = editPortfolio;
             window.navigate = navigate;
 
