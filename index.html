@@ -891,6 +891,12 @@
 
             function setSync(msg, cls) {
                 if (syncBar) {
+                    // Повністю прибираємо зелені повідомлення (ok) – ніхто їх не бачить
+                    if (cls === 'ok') {
+                        syncBar.textContent = '';
+                        syncBar.className = 'sync-bar';
+                        return;
+                    }
                     syncBar.textContent = msg;
                     syncBar.className = 'sync-bar ' + (cls || '');
                 }
