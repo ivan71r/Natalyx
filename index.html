@@ -115,20 +115,23 @@
         .header-left {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+            flex: 1;
+            min-width: 0;
         }
 
         .logo-icon {
             background: url('logo.png') center/cover no-repeat;
-            width: 40px;
-            height: 40px;
-            border-radius: 13px;
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 18px;
             box-shadow: 0 8px 20px rgba(201, 160, 80, 0.35);
             animation: logoFloat 3s ease-in-out infinite;
+            flex-shrink: 0;
         }
 
         @keyframes logoFloat {
@@ -138,12 +141,15 @@
 
         .brand-text {
             font-weight: 700;
-            font-size: 1.2rem;
+            font-size: 1rem;
             letter-spacing: -0.3px;
             background: linear-gradient(to right, #e8ecf2, #bcc8d8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .admin-gear-btn {
@@ -161,6 +167,7 @@
             transition: all 0.3s ease;
             position: relative;
             z-index: 3;
+            flex-shrink: 0;
         }
 
         .admin-gear-btn:hover {
@@ -882,7 +889,6 @@
 
             setTimeout(hideLoadingScreen, 100);
 
-            // Виправлення чорного екрану при поверненні в міні-апп
             document.addEventListener('visibilitychange', function() {
                 if (document.visibilityState === 'visible') {
                     hideLoadingScreen();
@@ -1487,14 +1493,12 @@
             };
 
             let isNavigating = false;
-            // Зберігаємо позиції прокрутки для кожного розділу
             const scrollPositions = {};
 
             function navigate(section) {
                 if (isNavigating) return;
                 isNavigating = true;
                 
-                // Зберігаємо поточну позицію прокрутки перед зміною розділу
                 if (mainContent && state.section) {
                     scrollPositions[state.section] = mainContent.scrollTop;
                 }
@@ -1505,7 +1509,6 @@
                     const content = renderers[section]?.() || '';
                     if (mainContent) {
                         mainContent.innerHTML = content;
-                        // Відновлюємо збережену позицію прокрутки для цього розділу, або 0 якщо це новий розділ
                         mainContent.scrollTop = scrollPositions[section] || 0;
                     }
                 } catch(e) {
